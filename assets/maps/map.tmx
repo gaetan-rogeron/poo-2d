@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="4">
+ <tileset firstgid="1" source="Tiles.tsx"/>
+ <tileset firstgid="193" source="Player.tsx"/>
+ <layer id="1" name="Background" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzbxsDAsI3GeCIQTwLiyXSwCxnPBeJ5QDyfzvauBOJVQLyazvaOhvNoOI+G82g4j4bzaDgPhnAeaf7Flq4A3eik3A==
+  </data>
+ </layer>
+ <layer id="2" name="Collision" width="30" height="20">
+  <properties>
+   <property name="blocked" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztzSkOgEAUBNFhVWzBsTrwcHfuRyUgGTfTmN/JM23KOe2ul3rWfbZh/6F74Pz4E6TIInV9q9GgFXcHjJjE3VCzrn85CpTibocKvbg7Y8Eq7oacda0bs3sDf2geCQ==
+  </data>
+ </layer>
+ <objectgroup id="3" name="Object">
+  <object id="2" name="Player" gid="193" x="224.183" y="225.916" width="32" height="32"/>
+ </objectgroup>
+</map>
