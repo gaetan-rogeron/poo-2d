@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="4">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="15">
  <tileset firstgid="1" source="Tiles.tsx"/>
  <tileset firstgid="193" source="Player.tsx"/>
- <layer id="1" name="Background" width="30" height="20">
+ <tileset firstgid="253" source="Slime_Green.tsx"/>
+ <tileset firstgid="277" source="Skeleton.tsx"/>
+ <layer id="1" name="Background" width="60" height="60">
   <data encoding="base64" compression="zlib">
-   eJzbxsDAsI3GeCIQTwLiyXSwCxnPBeJ5QDyfzvauBOJVQLyazvaOhvNoOI+G82g4j4bzaDgPhnAeaf7Flq4A3eik3A==
+   eJzt1CsShDAURNHs3/GxAxrwrI83DoGlqOoccU3cSbpyttbOlxuqsZpuZ/NHvW3996uWau3Eu1V7dXTitedsrz1ne+0522vP2V57zvbac7bXnrO93jfb29t/9RQvLy8vLy8vb6rXPfPy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy9uO9AIjkCxQ=
   </data>
  </layer>
- <layer id="2" name="Collision" width="30" height="20">
+ <layer id="2" name="Collision" width="60" height="60">
   <properties>
    <property name="blocked" type="bool" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzSkOgEAUBNFhVWzBsTrwcHfuRyUgGTfTmN/JM23KOe2ul3rWfbZh/6F74Pz4E6TIInV9q9GgFXcHjJjE3VCzrn85CpTibocKvbg7Y8Eq7oacda0bs3sDf2geCQ==
+   eJzt2MkKwkAQhOFxBcH95nrTu76772cNGPCgIHY7pif/B3XJoUlBSCadUlm3R7qCvnXLXSf/voknJ+X8w/lt63tRri+u95S+MjDOb1vfd2bKXFkY50Tpu1G2ys44J0pfL/StW4S+Q2WkjB1mRThvLJWpsnaYFaHvXjkoR4dZ+Vlue19P9K1b1/pGeF95oi8Qk+e5NIJ8Ll0ln3NpBLlv/v7St06e/x3favaOJWPdcVo0e8eSse44LZq9Y8lYd5wAAAAAAAAAAAAA8Ik7OoYb1A==
   </data>
  </layer>
  <objectgroup id="3" name="Object">
-  <object id="2" name="Player" gid="193" x="224.183" y="225.916" width="32" height="32"/>
+  <object id="2" name="Player" gid="193" x="15.2433" y="84.3447" width="33.3333" height="32"/>
+  <object id="4" name="Slime" gid="253" x="187.333" y="71.3333" width="64" height="64"/>
+  <object id="5" name="Slime" gid="261" x="196.667" y="181.333" width="64" height="64"/>
+  <object id="6" name="Slime" gid="253" x="312" y="112" width="64" height="64"/>
+  <object id="7" name="Slime" gid="253" x="225.333" y="118" width="64" height="64"/>
+  <object id="8" name="Slime" gid="253" x="112.667" y="190" width="64" height="64"/>
+  <object id="9" name="Slime" gid="253" x="102" y="83.3333" width="64" height="64"/>
+  <object id="10" name="Skeleton" gid="277" x="193.333" y="232.667" width="32" height="32"/>
+  <object id="11" name="Skeleton" gid="277" x="60.6667" y="271.333" width="32" height="32"/>
+  <object id="12" name="Skeleton" gid="277" x="84" y="216.667" width="32" height="32"/>
  </objectgroup>
 </map>

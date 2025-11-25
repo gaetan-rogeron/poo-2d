@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Player.tsx",
+    "activeFile": "map.tmx",
     "expandedProjectPaths": [
         "tilesets",
         "."
@@ -24,6 +24,10 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "Slime_Green.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Tiled.tsx": {
             "dynamicWrapping": false,
             "scaleInDock": 1,
@@ -36,7 +40,7 @@
         },
         "map.tmx": {
             "scale": 2.0484375,
-            "selectedLayer": 2,
+            "selectedLayer": 1,
             "viewCenter": {
                 "x": 239.93897787948134,
                 "y": 179.16094584286805
@@ -55,11 +59,13 @@
     "map.tileWidth": 16,
     "openFiles": [
         "Player.tsx",
-        "Tiles.tsx"
+        "Tiles.tsx",
+        "map.tmx"
     ],
     "project": "map-project.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "Slime_Green.tsx",
         "Tiles.tsx",
         "Player.tsx",
         "map.tmx",
