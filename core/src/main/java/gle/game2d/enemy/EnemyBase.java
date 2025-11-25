@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import gle.game2d.collision.CollisionMap;
-import gle.game2d.EnemyStats;
-import gle.game2d.IEnemyBehavior;
+import gle.game2d.enemy.EnemyStats;
+import gle.game2d.behavior.IEnemyBehavior;
 import gle.game2d.player.Player;
 
 /**

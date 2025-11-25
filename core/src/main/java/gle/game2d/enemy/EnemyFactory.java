@@ -1,7 +1,8 @@
 package gle.game2d.enemy;
 
-import gle.game2d.*;
 import gle.game2d.behavior.IEnemyBehavior;
+import gle.game2d.behavior.ChasePlayerBehavior;
+import gle.game2d.behavior.AttackOnProximityBehavior;
 import gle.game2d.collision.CollisionMap;
 
 /**
@@ -14,7 +15,42 @@ import gle.game2d.collision.CollisionMap;
 class EnemyFactory {
 
     /**
+     * Énumération des types d'ennemis disponibles.
+     */
+    public enum EnemyType {
+        SLIME,
+        SKELETON
+    }
+
+    /**
      * Crée un ennemi selon son type.
+     * Factory Method Pattern.
+     *
+     * @param type type d'ennemi
+     * @param x position X
+     * @param y position Y
+     * @param collisionMap carte de collision
+     * @return l'ennemi créé
+     * @throws IllegalArgumentException si le type est null
+     */
+    public static IEnemy createEnemy(EnemyType type, float x, float y,
+                                     CollisionMap collisionMap) {
+        if (type == null) {
+            throw new IllegalArgumentException("Type d'ennemi ne peut pas être null");
+        }
+
+        switch (type) {
+            case SLIME:
+                return createSlime(x, y, collisionMap);
+            case SKELETON:
+                return createSkeleton(x, y, collisionMap);
+            default:
+                throw new IllegalArgumentException("Type d'ennemi inconnu: " + type);
+        }
+    }
+
+    /**
+     * Crée un ennemi selon son type (version String pour compatibilité).
      * Factory Method Pattern.
      *
      * @param enemyType type d'ennemi ("Slime", "Skeleton")

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import gle.game2d.collision.CollisionMap;
-import gle.game2d.enemy.IEnemyBehavior;
+import gle.game2d.behavior.IEnemyBehavior;
 
 /**
  * Ennemi de type Skeleton
