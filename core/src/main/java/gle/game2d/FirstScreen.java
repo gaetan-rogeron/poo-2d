@@ -24,6 +24,9 @@ public class FirstScreen implements Screen {
     private HealthBar healthBar;
     private com.badlogic.gdx.graphics.glutils.ShapeRenderer shapeRenderer;
 
+    // Système de zones
+    private ZoneManager zoneManager;
+
     private float worldW;
     private float worldH;
 
@@ -47,25 +50,40 @@ public class FirstScreen implements Screen {
 
         CollisionMap collisions = new CollisionMap(map, "Collision");
 
+        // Initialiser le système de zones (2x2 = 4 zones)
+        zoneManager = new ZoneManager(worldW, worldH, 2, 2);
+
         camera = new OrthographicCamera();
-        viewport = new FitViewport(worldW, worldH, camera);
-        camera.position.set(worldW / 2, worldH / 2, 0);
-        camera.update();
+
+        // Le viewport doit correspondre à la taille d'UNE zone
+        float zoneWidth = zoneManager.getZoneWidth();
+        float zoneHeight = zoneManager.getZoneHeight();
+        viewport = new FitViewport(zoneWidth, zoneHeight, camera);
 
         batch = new SpriteBatch();
         player = new Player(collisions);
 
         // Charger la position du joueur depuis Tiled
+        float playerStartX = 0;
+        float playerStartY = 0;
+
         try {
             MapObject obj = map.getLayers().get("Object").getObjects().get("Player");
-            float sx = obj.getProperties().get("x", Float.class);
-            float sy = obj.getProperties().get("y", Float.class);
-            player.setCenter(sx, sy);
-            System.out.println("Player spawn OK: x=" + sx + ", y=" + sy);
+            playerStartX = obj.getProperties().get("x", Float.class);
+            playerStartY = obj.getProperties().get("y", Float.class);
+            player.setCenter(playerStartX, playerStartY);
+            System.out.println("Player spawn OK: x=" + playerStartX + ", y=" + playerStartY);
         } catch (Exception e) {
             System.out.println("Erreur PlayerSpawn: " + e.getMessage());
             e.printStackTrace();
+            playerStartX = zoneManager.getZoneWidth() / 2;
+            playerStartY = zoneManager.getZoneHeight() / 2;
+            player.setCenter(playerStartX, playerStartY);
         }
+
+        // Initialiser la caméra dans la zone du joueur (APRÈS avoir positionné le joueur)
+        zoneManager.initializeCamera(player.getCenterX(), player.getCenterY(), camera);
+        camera.update();
 
         // Créer l'EnemyManager et charger les ennemis depuis la map
         enemyManager = new EnemyManager(collisions);
@@ -81,18 +99,8 @@ public class FirstScreen implements Screen {
         player.update(delta);
         enemyManager.update(delta, player);
 
-        // Mise à jour de la caméra pour suivre le joueur
-        float camX = player.getCenterX();
-        float camY = player.getCenterY();
-        float halfW = viewport.getWorldWidth() / 2f;
-        float halfH = viewport.getWorldHeight() / 2f;
-
-        if (camX < halfW) camX = halfW;
-        if (camX > worldW - halfW) camX = worldW - halfW;
-        if (camY < halfH) camY = halfH;
-        if (camY > worldH - halfH) camY = worldH - halfH;
-
-        camera.position.set(camX, camY, 0);
+        // Mettre à jour le système de zones (déplace la caméra automatiquement)
+        zoneManager.update(delta, player.getCenterX(), player.getCenterY(), camera);
         camera.update();
 
         // Rendu
@@ -119,7 +127,17 @@ public class FirstScreen implements Screen {
     @Override
     public void resize(int w, int h) {
         if (w <= 0 || h <= 0) return;
-        viewport.update(w, h, true);
+
+        // Sauvegarder la position actuelle de la caméra
+        float camX = camera.position.x;
+        float camY = camera.position.y;
+
+        // Mettre à jour le viewport SANS recentrer (false au lieu de true)
+        viewport.update(w, h, false);
+
+        // Restaurer la position de la caméra
+        camera.position.set(camX, camY, 0);
+        camera.update();
     }
 
     @Override public void pause() {}
@@ -134,5 +152,6 @@ public class FirstScreen implements Screen {
         player.dispose();
         enemyManager.dispose();
         healthBar.dispose();
+        shapeRenderer.dispose();
     }
 }

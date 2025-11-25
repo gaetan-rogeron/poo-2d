@@ -5,8 +5,8 @@
     },
     "activeFile": "map.tmx",
     "expandedProjectPaths": [
-        "tilesets",
-        "."
+        ".",
+        "tilesets"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -21,6 +21,10 @@
             "scaleInEditor": 2
         },
         "Player32.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Skeleton.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -39,11 +43,11 @@
             "scaleInEditor": 2
         },
         "map.tmx": {
-            "scale": 2.0484375,
-            "selectedLayer": 1,
+            "scale": 0.75,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 239.93897787948134,
-                "y": 179.16094584286805
+                "x": 383.33333333333326,
+                "y": 542.6666666666665
             }
         },
         "tileset.tsx": {
@@ -58,17 +62,19 @@
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "openFiles": [
+        "map.tmx",
         "Player.tsx",
-        "Tiles.tsx",
-        "map.tmx"
+        "Slime_Green.tsx",
+        "Skeleton.tsx"
     ],
     "project": "map-project.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "Skeleton.tsx",
         "Slime_Green.tsx",
-        "Tiles.tsx",
         "Player.tsx",
         "map.tmx",
+        "Tiles.tsx",
         "Tiled.tsx",
         "Player32.tsx",
         "Outdoor decoration.tsx",

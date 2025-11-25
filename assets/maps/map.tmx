@@ -6,7 +6,7 @@
  <tileset firstgid="277" source="Skeleton.tsx"/>
  <layer id="1" name="Background" width="60" height="60">
   <data encoding="base64" compression="zlib">
-   eJzt1CsShDAURNHs3/GxAxrwrI83DoGlqOoccU3cSbpyttbOlxuqsZpuZ/NHvW3996uWau3Eu1V7dXTitedsrz1ne+0522vP2V57zvbac7bXnrO93jfb29t/9RQvLy8vLy8vb6rXPfPy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy9uO9AIjkCxQ=
+   eJztmEtyw0AIRHUyHy9e57NNsk6y9/mi7BSKgW5gbGR5QfkzGhdvukHIl2VZLpPjeY2XNV43373dKGaz/sX7Gh9rfB6E92uN7zV+DsJb6ecnER15s362+Fj+zn6WDAiPx97Vz1rOrH+13+jqZ401UrNyT0c/b3OU70c6ezXe1c8jVpm3VdfW525+RnWy9LbOopOfR7p6Nc38Tic/yzyRe5FVy9r1Xfxs1abVk9k+3sXPnpaWvl4ddPMzOleMZhBmBuvgZ0ZPTVPtdU/6InlrtdrleSGiL8OM9KlO/YrpvxYv0rOuwatFJS86h+yB1/M7+7zUgZdlZntUR17E1xX/AXTj9YL1RWdeL47Gq/E9eB+8e+aVjCzvrWKP53wPvGcR98yr8c1izuR8GgTDO+JieaU/RvsznOwawysZvGvQM4uwVlzD6qjph9S6XGc9W3UmlbyIBxBehnEGL8KIcCO8GS2Rc/J6s6ebto4wR3k9j0d5z8v/3Nk+5Z0Rmyvq8QzvebCm7WGYGV62liO8mj+9fmtdo12L5DqjZ3laoTNXNe+sHu31JUTHCt4K1gpeK++ZvBFWxs+RvBEfoP3qtHnNaOvtn8GL1L/Fm9U1y+uxyjOJzBsZXqlphb7MvImcS1X9ju7ZM3glI8rq8Vb2pwpe7zNyXhW8kT1Ibt4s7T1LaGvZ3KN9HKlHaxaxvre8ndUr6n8rJ00/jZ/pVxW8mXmE5fV6FhpRjsw8gvJ6NcpwVvBGWbO8UdYIb1ZXllf2oYiHo7xVrCxvpl4R3i0z+18sGr9axcp1
   </data>
  </layer>
  <layer id="2" name="Collision" width="60" height="60">
