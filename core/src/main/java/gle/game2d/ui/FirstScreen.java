@@ -1,4 +1,4 @@
-package gle.game2d;
+package gle.game2d.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,6 +11,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import gle.game2d.Main;
+import gle.game2d.zone.ZoneManager;
+import gle.game2d.collision.CollisionMap;
+import gle.game2d.enemy.EnemyManager;
+import gle.game2d.player.Player;
 
 public class FirstScreen implements Screen {
     private final Main game;

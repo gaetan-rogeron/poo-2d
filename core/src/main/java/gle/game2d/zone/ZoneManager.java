@@ -1,4 +1,4 @@
-package gle.game2d;
+package gle.game2d.zone;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;

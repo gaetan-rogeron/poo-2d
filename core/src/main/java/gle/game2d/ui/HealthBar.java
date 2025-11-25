@@ -1,8 +1,9 @@
-package gle.game2d;
+package gle.game2d.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import gle.game2d.player.Player;
 
 public class HealthBar {
     private ShapeRenderer shapeRenderer;
