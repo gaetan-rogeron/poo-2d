@@ -4,23 +4,11 @@ import gle.game2d.enemy.EnemyBase;
 import gle.game2d.player.Player;
 
 /**
- * Comportement : Suivre le joueur.
- * L'ennemi se déplace toujours vers le joueur.
- * Stratégie concrète du patron Strategy.
- *
- * @author Votre Nom
- * @version 1.0
+ * Comportement : Suivre le joueur. L'ennemi se déplace toujours vers le joueur. Stratégie concrète du patron Strategy.
  */
 public class ChasePlayerBehavior implements IEnemyBehavior {
 
-    /**
-     * Exécute le comportement de poursuite.
-     * L'ennemi se déplace en direction du joueur.
-     *
-     * @param enemy l'ennemi exécutant le comportement
-     * @param deltaTime temps écoulé
-     * @param player référence au joueur
-     */
+    /** Exécute le comportement de poursuite. L'ennemi se déplace en direction du joueur. */
     @Override
     public void execute(EnemyBase enemy, float deltaTime, Player player) {
         float px = player.getCenterX();

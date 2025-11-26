@@ -13,57 +13,41 @@ import gle.game2d.enemy.EnemyStats;
 import gle.game2d.behavior.IEnemyBehavior;
 import gle.game2d.player.Player;
 
-/**
- * Classe de base abstraite pour tous les ennemis.
- * Applique le patron Template Method pour la structure générale.
- * Applique le patron Strategy pour les comportements.
- *
- * @author Votre Nom
- * @version 1.0
- */
+/** Classe de base abstraite pour tous les ennemis. Applique le patron Template Method pour la structure générale. Applique le patron Strategy pour les comportements. */
 public abstract class EnemyBase implements IEnemy {
-    // === Constantes ===
+    //Constantes
     private static final float INVINCIBILITY_DURATION = 0.3f;
     private static final float HEALTH_BAR_HEIGHT = 4f;
     private static final int BLINK_FREQUENCY = 10;
 
-    // === Position et dimensions (privées avec accesseurs) ===
+    //Position et dimensions (privées avec accesseurs)
     private final Vector2 position;
     private final int width;
     private final int height;
 
-    // === Statistiques ===
+    //Statistiques
     private final float speed;
     private final int maxHealth;
     private int currentHealth;
     private final int damage;
 
-    // === État ===
+    //État
     private boolean alive;
     private boolean invincible;
     private float invincibilityTimer;
 
-    // === Animation ===
+    //Animation
     protected Texture spriteSheet;
     protected Animation<TextureRegion> currentAnimation;
     protected float stateTime;
 
-    // === Comportement (Patron Strategy) ===
+    //Comportement (Patron Strategy)
     private final IEnemyBehavior behavior;
 
-    // === Référence collision ===
+    //Référence collision
     protected final CollisionMap collisionMap;
 
-    /**
-     * Constructeur protégé (Template Method Pattern).
-     *
-     * @param x position X initiale
-     * @param y position Y initiale
-     * @param stats statistiques de l'ennemi
-     * @param behavior comportement de l'ennemi
-     * @param collisionMap carte de collision
-     * @throws IllegalArgumentException si les paramètres sont invalides
-     */
+    /** Constructeur protégé (Template Method Pattern). */
     protected EnemyBase(float x, float y, EnemyStats stats, IEnemyBehavior behavior,
                         CollisionMap collisionMap) {
         if (stats == null) {
@@ -93,19 +77,10 @@ public abstract class EnemyBase implements IEnemy {
         initializeAnimations();
     }
 
-    /**
-     * Méthode abstraite pour initialiser les animations spécifiques.
-     * Hook Method du Template Method Pattern.
-     */
+    /** Méthode abstraite pour initialiser les animations spécifiques. Hook Method du Template Method Pattern. */
     protected abstract void initializeAnimations();
 
-    /**
-     * Met à jour l'ennemi.
-     * Template Method : structure fixe avec étapes personnalisables.
-     *
-     * @param deltaTime temps écoulé
-     * @param player référence au joueur
-     */
+    /** Met à jour l'ennemi. Template Method : structure fixe avec étapes personnalisables. */
     @Override
     public void update(float deltaTime, Player player) {
         if (!alive) return;
@@ -120,11 +95,7 @@ public abstract class EnemyBase implements IEnemy {
         executeBehavior(deltaTime, player);
     }
 
-    /**
-     * Étape 1 : Met à jour l'état d'invincibilité.
-     *
-     * @param deltaTime temps écoulé
-     */
+    /** Étape 1 : Met à jour l'état d'invincibilité. */
     private void updateInvincibility(float deltaTime) {
         if (invincible) {
             invincibilityTimer -= deltaTime;
@@ -134,31 +105,17 @@ public abstract class EnemyBase implements IEnemy {
         }
     }
 
-    /**
-     * Étape 2 : Met à jour le temps d'animation.
-     *
-     * @param deltaTime temps écoulé
-     */
+    /** Étape 2 : Met à jour le temps d'animation. */
     protected void updateAnimation(float deltaTime) {
         stateTime += deltaTime;
     }
 
-    /**
-     * Étape 3 : Exécute le comportement de l'ennemi.
-     * Délégation au Strategy Pattern.
-     *
-     * @param deltaTime temps écoulé
-     * @param player référence au joueur
-     */
+    /** Étape 3 : Exécute le comportement de l'ennemi. Délégation au Strategy Pattern. */
     protected void executeBehavior(float deltaTime, Player player) {
         behavior.execute(this, deltaTime, player);
     }
 
-    /**
-     * Dessine l'ennemi à l'écran.
-     *
-     * @param batch SpriteBatch pour le rendu
-     */
+    /** Dessine l'ennemi à l'écran. */
     @Override
     public void draw(SpriteBatch batch) {
         if (!alive) return;
@@ -174,21 +131,13 @@ public abstract class EnemyBase implements IEnemy {
         }
     }
 
-    /**
-     * Détermine si l'ennemi doit être invisible (clignotement).
-     *
-     * @return true si invisible
-     */
+    /** Détermine si l'ennemi doit être invisible (clignotement). */
     private boolean shouldBlink() {
         int blinkCycle = (int) (invincibilityTimer * BLINK_FREQUENCY);
         return blinkCycle % 2 == 1;
     }
 
-    /**
-     * Dessine la barre de vie de l'ennemi.
-     *
-     * @param shapeRenderer renderer pour les formes
-     */
+    /** Dessine la barre de vie de l'ennemi. */
     @Override
     public void drawHealthBar(ShapeRenderer shapeRenderer) {
         if (!alive) return;
@@ -213,23 +162,14 @@ public abstract class EnemyBase implements IEnemy {
         shapeRenderer.rect(barX, barY, healthWidth, HEALTH_BAR_HEIGHT);
     }
 
-    /**
-     * Détermine la couleur de la barre de vie selon le pourcentage.
-     *
-     * @param healthPercent pourcentage de vie (0.0 à 1.0)
-     * @return couleur appropriée
-     */
+    /** Détermine la couleur de la barre de vie selon le pourcentage. */
     private Color getHealthColor(float healthPercent) {
         if (healthPercent > 0.5f) return Color.GREEN;
         if (healthPercent > 0.25f) return Color.ORANGE;
         return Color.RED;
     }
 
-    /**
-     * Inflige des dégâts à l'ennemi.
-     *
-     * @param dmg montant des dégâts
-     */
+    /** Inflige des dégâts à l'ennemi. */
     @Override
     public void takeDamage(int dmg) {
         if (invincible || !alive) return;
@@ -249,20 +189,12 @@ public abstract class EnemyBase implements IEnemy {
             + " dégâts. Vie: " + currentHealth + "/" + maxHealth);
     }
 
-    /**
-     * Hook method : appelé quand l'ennemi meurt.
-     * Peut être overridé dans les sous-classes.
-     */
+    /** Hook method : appelé quand l'ennemi meurt. Peut être overridé dans les sous-classes. */
     protected void onDeath() {
         System.out.println(getClass().getSimpleName() + " est mort!");
     }
 
-    /**
-     * Tente de déplacer l'ennemi avec détection de collision.
-     *
-     * @param dx déplacement en X
-     * @param dy déplacement en Y
-     */
+    /** Tente de déplacer l'ennemi avec détection de collision. */
     public void tryMove(float dx, float dy) {
         // Essayer mouvement en X
         if (dx != 0 && !collisionMap.collides(position.x + dx, position.y, width, height)) {
@@ -275,30 +207,20 @@ public abstract class EnemyBase implements IEnemy {
         }
     }
 
-    /**
-     * Calcule la distance jusqu'à un point.
-     *
-     * @param x coordonnée X
-     * @param y coordonnée Y
-     * @return distance en pixels
-     */
+    /** Calcule la distance jusqu'à un point. */
     public float distanceTo(float x, float y) {
         float dx = x - getCenterX();
         float dy = y - getCenterY();
         return (float) Math.sqrt(dx * dx + dy * dy);
     }
 
-    /**
-     * Obtient les limites rectangulaires de l'ennemi.
-     *
-     * @return rectangle de collision
-     */
+    /** Obtient les limites rectangulaires de l'ennemi. */
     @Override
     public Rectangle getBounds() {
         return new Rectangle(position.x, position.y, width, height);
     }
 
-    // === Accesseurs publics ===
+    //Accesseurs publics
 
     @Override
     public boolean isAlive() {
@@ -346,9 +268,7 @@ public abstract class EnemyBase implements IEnemy {
         return invincible;
     }
 
-    /**
-     * Libère les ressources.
-     */
+    /** Libère les ressources. */
     @Override
     public void dispose() {
         if (spriteSheet != null) {

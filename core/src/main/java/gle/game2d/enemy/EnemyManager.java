@@ -12,19 +12,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Gestionnaire centralisé pour tous les ennemis.
- * Responsable de la création, mise à jour, rendu et destruction des ennemis.
- */
+/** Gestionnaire centralisé pour tous les ennemis. Responsable de la création, mise à jour, rendu et destruction des ennemis. */
 public class EnemyManager {
     private final List<IEnemy> enemies;
     private final CollisionMap collisionMap;
     private final EnemyFactory factory;
 
-    /**
-     * Constructeur
-     * @param collisionMap Carte de collision pour les ennemis
-     */
+    /** Constructeur. */
     public EnemyManager(CollisionMap collisionMap) {
         if (collisionMap == null) {
             throw new IllegalArgumentException("CollisionMap cannot be null");
@@ -35,10 +29,7 @@ public class EnemyManager {
         this.factory = new EnemyFactory();
     }
 
-    /**
-     * Charge tous les ennemis depuis une TiledMap
-     * @param map La map Tiled contenant les positions des ennemis
-     */
+    /** Charge tous les ennemis depuis une TiledMap. */
     public void loadEnemiesFromMap(TiledMap map) {
         if (map == null) {
             throw new IllegalArgumentException("TiledMap cannot be null");
@@ -62,9 +53,7 @@ public class EnemyManager {
         }
     }
 
-    /**
-     * Tente de créer un ennemi depuis un objet Tiled
-     */
+    /** Tente de créer un ennemi depuis un objet Tiled. */
     private void trySpawnEnemyFromObject(MapObject obj) {
         String name = obj.getName();
         if (name == null) return;
@@ -82,9 +71,7 @@ public class EnemyManager {
         }
     }
 
-    /**
-     * Convertit un nom d'objet en type d'ennemi
-     */
+    /** Convertit un nom d'objet en type d'ennemi. */
     private EnemyFactory.EnemyType parseEnemyType(String name) {
         try {
             return EnemyFactory.EnemyType.valueOf(name.toUpperCase());
@@ -94,23 +81,14 @@ public class EnemyManager {
         }
     }
 
-    /**
-     * Crée et ajoute un ennemi à la position donnée
-     * @param type Type d'ennemi
-     * @param x Position X
-     * @param y Position Y
-     */
+    /** Crée et ajoute un ennemi à la position donnée. */
     public void spawnEnemy(EnemyFactory.EnemyType type, float x, float y) {
         IEnemy enemy = EnemyFactory.createEnemy(type, x, y, collisionMap);
         enemies.add(enemy);
         System.out.println(type + " spawned at: (" + x + ", " + y + ")");
     }
 
-    /**
-     * Met à jour tous les ennemis
-     * @param deltaTime Temps écoulé
-     * @param player Le joueur
-     */
+    /** Met à jour tous les ennemis. */
     public void update(float deltaTime, Player player) {
         if (player == null) {
             throw new IllegalArgumentException("Player cannot be null");
@@ -128,9 +106,7 @@ public class EnemyManager {
         removeDeadEnemies();
     }
 
-    /**
-     * Vérifie les collisions entre l'attaque du joueur et les ennemis
-     */
+    /** Vérifie les collisions entre l'attaque du joueur et les ennemis. */
     private void checkPlayerAttackCollisions(Player player) {
         Rectangle attackHitbox = player.getAttackHitbox();
         if (attackHitbox == null) return;
@@ -144,9 +120,7 @@ public class EnemyManager {
         }
     }
 
-    /**
-     * Supprime les ennemis morts de la liste
-     */
+    /** Supprime les ennemis morts de la liste. */
     private void removeDeadEnemies() {
         Iterator<IEnemy> iterator = enemies.iterator();
         while (iterator.hasNext()) {
@@ -158,10 +132,7 @@ public class EnemyManager {
         }
     }
 
-    /**
-     * Dessine tous les ennemis
-     * @param batch SpriteBatch pour le rendu
-     */
+    /** Dessine tous les ennemis. */
     public void draw(SpriteBatch batch) {
         if (batch == null) {
             throw new IllegalArgumentException("SpriteBatch cannot be null");
@@ -172,10 +143,7 @@ public class EnemyManager {
         }
     }
 
-    /**
-     * Dessine les barres de vie de tous les ennemis
-     * @param shapeRenderer Renderer pour les formes
-     */
+    /** Dessine les barres de vie de tous les ennemis. */
     public void drawHealthBars(ShapeRenderer shapeRenderer) {
         if (shapeRenderer == null) {
             throw new IllegalArgumentException("ShapeRenderer cannot be null");
@@ -188,23 +156,17 @@ public class EnemyManager {
         shapeRenderer.end();
     }
 
-    /**
-     * @return Liste en lecture seule des ennemis
-     */
+    /** Retourne la liste en lecture seule des ennemis. */
     public List<IEnemy> getEnemies() {
         return new ArrayList<>(enemies); // Retourne une copie pour l'encapsulation
     }
 
-    /**
-     * @return Nombre d'ennemis vivants
-     */
+    /** Retourne le nombre d'ennemis vivants. */
     public int getAliveEnemyCount() {
         return (int) enemies.stream().filter(IEnemy::isAlive).count();
     }
 
-    /**
-     * Supprime tous les ennemis
-     */
+    /** Supprime tous les ennemis. */
     public void clear() {
         for (IEnemy enemy : enemies) {
             enemy.dispose();
@@ -212,9 +174,7 @@ public class EnemyManager {
         enemies.clear();
     }
 
-    /**
-     * Libère toutes les ressources
-     */
+    /** Libère toutes les ressources. */
     public void dispose() {
         clear();
     }

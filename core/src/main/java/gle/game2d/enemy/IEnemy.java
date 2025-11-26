@@ -5,66 +5,29 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import gle.game2d.player.Player;
 
-/**
- * Interface définissant le comportement d'un ennemi.
- * Applique le principe Dependency Inversion (dépendance sur abstraction).
- *
- * @author Votre Nom
- * @version 1.0
- */
+/** Interface définissant le comportement d'un ennemi. Applique le principe Dependency Inversion (dépendance sur abstraction). */
 public interface IEnemy {
-    /**
-     * Met à jour l'état de l'ennemi.
-     *
-     * @param deltaTime temps écoulé depuis la dernière frame
-     * @param player référence au joueur
-     */
+    /** Met à jour l'état de l'ennemi. */
     void update(float deltaTime, Player player);
 
-    /**
-     * Dessine l'ennemi à l'écran.
-     *
-     * @param batch SpriteBatch pour le rendu
-     */
+    /** Dessine l'ennemi à l'écran. */
     void draw(SpriteBatch batch);
 
-    /**
-     * Dessine la barre de vie de l'ennemi.
-     *
-     * @param shapeRenderer renderer pour les formes
-     */
+    /** Dessine la barre de vie de l'ennemi. */
     void drawHealthBar(ShapeRenderer shapeRenderer);
 
-    /**
-     * Inflige des dégâts à l'ennemi.
-     *
-     * @param damage montant des dégâts
-     */
+    /** Inflige des dégâts à l'ennemi. */
     void takeDamage(int damage);
 
-    /**
-     * Vérifie si l'ennemi est vivant.
-     *
-     * @return true si vivant
-     */
+    /** Vérifie si l'ennemi est vivant. */
     boolean isAlive();
 
-    /**
-     * Obtient les limites rectangulaires de l'ennemi pour les collisions.
-     *
-     * @return rectangle de collision
-     */
+    /** Obtient les limites rectangulaires de l'ennemi pour les collisions. */
     Rectangle getBounds();
 
-    /**
-     * Obtient les dégâts que l'ennemi inflige.
-     *
-     * @return montant des dégâts
-     */
+    /** Obtient les dégâts que l'ennemi inflige. */
     int getDamage();
 
-    /**
-     * Libère les ressources utilisées par l'ennemi.
-     */
+    /** Libère les ressources utilisées par l'ennemi. */
     void dispose();
 }

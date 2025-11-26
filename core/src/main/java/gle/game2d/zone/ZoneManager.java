@@ -6,49 +6,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Gestionnaire des zones de caméra avec système de transitions.
- * Gère les transitions fluides entre les zones lors des déplacements du joueur.
- * Applique les patrons Observer et Strategy.
- *
- * @author Votre Nom
- * @version 2.0
+ * Gestionnaire des zones de caméra avec système de transitions. Gère les transitions fluides entre les zones lors des déplacements du joueur. Applique les patrons Observer et Strategy.
  */
 public class ZoneManager {
-    // === Constantes ===
+    //Constantes
     private static final float DEFAULT_TRANSITION_SPEED = 3f;
 
-    // === Configuration des zones ===
+    //Configuration des zones
     private final float zoneWidth;
     private final float zoneHeight;
     private final int zonesX;
     private final int zonesY;
 
-    // === État des zones ===
+    //État des zones
     private int currentZoneX = 0;
     private int currentZoneY = 0;
     private int targetZoneX = 0;
     private int targetZoneY = 0;
 
-    // === Gestion des transitions ===
+    //Gestion des transitions
     private boolean transitioning = false;
     private float transitionProgress = 0f;
     private float transitionSpeed;
     private float cameraStartX, cameraStartY;
     private float cameraTargetX, cameraTargetY;
 
-    // === Patrons de conception ===
+    //Patrons de conception
     private ITransitionStrategy transitionStrategy;
     private final List<IZoneObserver> observers;
 
-    /**
-     * Constructeur du gestionnaire de zones.
-     *
-     * @param worldWidth largeur totale du monde
-     * @param worldHeight hauteur totale du monde
-     * @param zonesX nombre de zones en largeur
-     * @param zonesY nombre de zones en hauteur
-     * @throws IllegalArgumentException si les paramètres sont invalides
-     */
+    /** Constructeur du gestionnaire de zones. */
     public ZoneManager(float worldWidth, float worldHeight, int zonesX, int zonesY) {
         validateConstructorParameters(worldWidth, worldHeight, zonesX, zonesY);
 
@@ -61,9 +48,7 @@ public class ZoneManager {
         this.observers = new ArrayList<>();
     }
 
-    /**
-     * Valide les paramètres du constructeur.
-     */
+    /** Valide les paramètres du constructeur. */
     private void validateConstructorParameters(float worldWidth, float worldHeight, int zonesX, int zonesY) {
         if (worldWidth <= 0 || worldHeight <= 0) {
             throw new IllegalArgumentException("Les dimensions du monde doivent être positives");
@@ -73,14 +58,7 @@ public class ZoneManager {
         }
     }
 
-    /**
-     * Met à jour la position de la caméra en fonction de la position du joueur.
-     *
-     * @param delta temps écoulé depuis la dernière frame
-     * @param playerX position X du joueur
-     * @param playerY position Y du joueur
-     * @param camera caméra à mettre à jour
-     */
+    /** Met à jour la position de la caméra en fonction de la position du joueur. */
     public void update(float delta, float playerX, float playerY, OrthographicCamera camera) {
         int playerZoneX = calculatePlayerZoneX(playerX);
         int playerZoneY = calculatePlayerZoneY(playerY);
@@ -94,33 +72,24 @@ public class ZoneManager {
         }
     }
 
-    /**
-     * Calcule la zone X du joueur.
-     */
+    /** Calcule la zone X du joueur. */
     private int calculatePlayerZoneX(float playerX) {
         int zoneX = (int)(playerX / zoneWidth);
         return MathUtils.clamp(zoneX, 0, zonesX - 1);
     }
 
-    /**
-     * Calcule la zone Y du joueur.
-     * Inverse Y car libGDX utilise Y vers le haut.
-     */
+    /** Calcule la zone Y du joueur. Inverse Y car libGDX utilise Y vers le haut. */
     private int calculatePlayerZoneY(float playerY) {
         int zoneY = zonesY - 1 - (int)(playerY / zoneHeight);
         return MathUtils.clamp(zoneY, 0, zonesY - 1);
     }
 
-    /**
-     * Vérifie si une nouvelle transition doit démarrer.
-     */
+    /** Vérifie si une nouvelle transition doit démarrer. */
     private boolean shouldStartTransition(int playerZoneX, int playerZoneY) {
         return !transitioning && (playerZoneX != targetZoneX || playerZoneY != targetZoneY);
     }
 
-    /**
-     * Met à jour la progression de la transition.
-     */
+    /** Met à jour la progression de la transition. */
     private void updateTransition(float delta, OrthographicCamera camera) {
         transitionProgress += delta * transitionSpeed;
 
@@ -131,9 +100,7 @@ public class ZoneManager {
         }
     }
 
-    /**
-     * Applique la transition en cours avec la stratégie sélectionnée.
-     */
+    /** Applique la transition en cours avec la stratégie sélectionnée. */
     private void applyTransition(OrthographicCamera camera) {
         float t = transitionStrategy.interpolate(transitionProgress);
         float camX = MathUtils.lerp(cameraStartX, cameraTargetX, t);
@@ -143,9 +110,7 @@ public class ZoneManager {
         notifyTransitionProgress(t);
     }
 
-    /**
-     * Termine la transition en cours.
-     */
+    /** Termine la transition en cours. */
     private void finishTransition(OrthographicCamera camera) {
         transitioning = false;
         transitionProgress = 0f;
@@ -156,9 +121,7 @@ public class ZoneManager {
         notifyTransitionEnd();
     }
 
-    /**
-     * Démarre une nouvelle transition vers une zone.
-     */
+    /** Démarre une nouvelle transition vers une zone. */
     private void startTransition(int newZoneX, int newZoneY, OrthographicCamera camera) {
         transitioning = true;
         transitionProgress = 0f;
@@ -176,28 +139,17 @@ public class ZoneManager {
             "] avec stratégie: " + transitionStrategy.getName());
     }
 
-    /**
-     * Calcule la position X du centre d'une zone.
-     */
+    /** Calcule la position X du centre d'une zone. */
     private float calculateZoneCenterX(int zoneX) {
         return (zoneX + 0.5f) * zoneWidth;
     }
 
-    /**
-     * Calcule la position Y du centre d'une zone.
-     * Inverse Y pour la position de la caméra.
-     */
+    /** Calcule la position Y du centre d'une zone. Inverse Y pour la position de la caméra. */
     private float calculateZoneCenterY(int zoneY) {
         return ((zonesY - 1 - zoneY) + 0.5f) * zoneHeight;
     }
 
-    /**
-     * Initialise la caméra dans la zone où se trouve le joueur au démarrage.
-     *
-     * @param playerX position X du joueur
-     * @param playerY position Y du joueur
-     * @param camera caméra à initialiser
-     */
+    /** Initialise la caméra dans la zone où se trouve le joueur au démarrage. */
     public void initializeCamera(float playerX, float playerY, OrthographicCamera camera) {
         currentZoneX = calculatePlayerZoneX(playerX);
         currentZoneY = calculatePlayerZoneY(playerY);
@@ -214,14 +166,9 @@ public class ZoneManager {
         System.out.println("Position caméra: x=" + camX + ", y=" + camY);
     }
 
-    // === Gestion des observers (Patron Observer) ===
+    //Gestion des observers (Patron Observer)
 
-    /**
-     * Ajoute un observateur de changements de zones.
-     *
-     * @param observer l'observateur à ajouter
-     * @throws IllegalArgumentException si l'observateur est null
-     */
+    /** Ajoute un observateur de changements de zones. */
     public void addObserver(IZoneObserver observer) {
         if (observer == null) {
             throw new IllegalArgumentException("L'observateur ne peut pas être null");
@@ -231,59 +178,42 @@ public class ZoneManager {
         }
     }
 
-    /**
-     * Retire un observateur de changements de zones.
-     *
-     * @param observer l'observateur à retirer
-     */
+    /** Retire un observateur de changements de zones. */
     public void removeObserver(IZoneObserver observer) {
         observers.remove(observer);
     }
 
-    /**
-     * Notifie tous les observateurs du début d'une transition.
-     */
+    /** Notifie tous les observateurs du début d'une transition. */
     private void notifyTransitionStart() {
         for (IZoneObserver observer : observers) {
             observer.onTransitionStart(currentZoneX, currentZoneY, targetZoneX, targetZoneY);
         }
     }
 
-    /**
-     * Notifie tous les observateurs de la progression d'une transition.
-     */
+    /** Notifie tous les observateurs de la progression d'une transition. */
     private void notifyTransitionProgress(float progress) {
         for (IZoneObserver observer : observers) {
             observer.onTransitionProgress(currentZoneX, currentZoneY, targetZoneX, targetZoneY, progress);
         }
     }
 
-    /**
-     * Notifie tous les observateurs de la fin d'une transition.
-     */
+    /** Notifie tous les observateurs de la fin d'une transition. */
     private void notifyTransitionEnd() {
         for (IZoneObserver observer : observers) {
             observer.onTransitionEnd(currentZoneX, currentZoneY);
         }
     }
 
-    /**
-     * Notifie tous les observateurs de l'entrée dans une zone.
-     */
+    /** Notifie tous les observateurs de l'entrée dans une zone. */
     private void notifyZoneEnter() {
         for (IZoneObserver observer : observers) {
             observer.onZoneEnter(currentZoneX, currentZoneY);
         }
     }
 
-    // === Gestion de la stratégie (Patron Strategy) ===
+    //Gestion de la stratégie (Patron Strategy)
 
-    /**
-     * Définit la stratégie de transition à utiliser.
-     *
-     * @param strategy la nouvelle stratégie
-     * @throws IllegalArgumentException si la stratégie est null
-     */
+    /** Définit la stratégie de transition à utiliser. */
     public void setTransitionStrategy(ITransitionStrategy strategy) {
         if (strategy == null) {
             throw new IllegalArgumentException("La stratégie ne peut pas être null");
@@ -292,21 +222,12 @@ public class ZoneManager {
         System.out.println("Stratégie de transition changée: " + strategy.getName());
     }
 
-    /**
-     * Obtient la stratégie de transition actuelle.
-     *
-     * @return la stratégie actuelle
-     */
+    /** Obtient la stratégie de transition actuelle. */
     public ITransitionStrategy getTransitionStrategy() {
         return transitionStrategy;
     }
 
-    /**
-     * Définit la vitesse de transition.
-     *
-     * @param speed vitesse de transition (doit être positive)
-     * @throws IllegalArgumentException si la vitesse est négative ou nulle
-     */
+    /** Définit la vitesse de transition. */
     public void setTransitionSpeed(float speed) {
         if (speed <= 0) {
             throw new IllegalArgumentException("La vitesse doit être positive, reçu: " + speed);
@@ -314,16 +235,12 @@ public class ZoneManager {
         this.transitionSpeed = speed;
     }
 
-    /**
-     * Obtient la vitesse de transition actuelle.
-     *
-     * @return vitesse de transition
-     */
+    /** Obtient la vitesse de transition actuelle. */
     public float getTransitionSpeed() {
         return transitionSpeed;
     }
 
-    // === Accesseurs ===
+    //Accesseurs
 
     public boolean isTransitioning() {
         return transitioning;

@@ -10,13 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Gère toutes les animations du joueur.
- * Single Responsibility Principle: cette classe s'occupe uniquement des animations.
- *
- * @author Votre Nom
- * @version 1.0
- */
+/** Gère toutes les animations du joueur. Single Responsibility Principle : cette classe s'occupe uniquement des animations. */
 public class PlayerAnimationComponent {
     private static final int SPRITE_WIDTH = 32;
     private static final int SPRITE_HEIGHT = 32;
@@ -31,9 +25,7 @@ public class PlayerAnimationComponent {
 
     private final Map<String, Animation<TextureRegion>> animations;
 
-    /**
-     * Constructeur - charge et initialise toutes les animations.
-     */
+    /** Constructeur - charge et initialise toutes les animations. */
     public PlayerAnimationComponent() {
         this.spriteSheet = new Texture(Gdx.files.internal("maps/player.png"));
         this.grid = TextureRegion.split(spriteSheet, SPRITE_WIDTH, SPRITE_HEIGHT);
@@ -81,16 +73,7 @@ public class PlayerAnimationComponent {
         return animation;
     }
 
-    /**
-     * Dessine l'animation appropriée.
-     *
-     * @param batch SpriteBatch
-     * @param state état d'animation
-     * @param stateTime temps d'animation
-     * @param position position du joueur
-     * @param width largeur
-     * @param height hauteur
-     */
+    /** Dessine l'animation appropriée. */
     public void draw(SpriteBatch batch, PlayerAnimationState state, float stateTime,
                      Vector2 position, int width, int height) {
         String key = state.getAnimationKey();
@@ -102,9 +85,7 @@ public class PlayerAnimationComponent {
         }
     }
 
-    /**
-     * Libère les ressources.
-     */
+    /** Libère les ressources. */
     public void dispose() {
         spriteSheet.dispose();
     }

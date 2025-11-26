@@ -1,12 +1,6 @@
 package gle.game2d.player;
 
-/**
- * Gère le système d'attaque du joueur.
- * Single Responsibility Principle: cette classe s'occupe uniquement des attaques.
- *
- * @author Votre Nom
- * @version 1.0
- */
+/** Gère le système d'attaque du joueur. Single Responsibility Principle: cette classe s'occupe uniquement des attaques. */
 public class PlayerAttackComponent {
     private final int damage;
     private final float range;
@@ -18,14 +12,7 @@ public class PlayerAttackComponent {
     private float attackTime;
     private float cooldown;
 
-    /**
-     * Constructeur.
-     *
-     * @param damage Dégâts infligés
-     * @param range Portée de l'attaque
-     * @param duration Durée de l'animation d'attaque
-     * @param cooldownTime Temps de cooldown entre attaques
-     */
+    /** Constructeur. */
     public PlayerAttackComponent(int damage, float range, float duration, float cooldownTime) {
         this.damage = damage;
         this.range = range;
@@ -37,11 +24,7 @@ public class PlayerAttackComponent {
         this.cooldown = 0f;
     }
 
-    /**
-     * Met à jour l'état d'attaque.
-     *
-     * @param deltaTime Temps écoulé
-     */
+    /** Met à jour l'état d'attaque. */
     public void update(float deltaTime) {
         if (cooldown > 0) {
             cooldown -= deltaTime;
@@ -56,9 +39,7 @@ public class PlayerAttackComponent {
         }
     }
 
-    /**
-     * Démarre une attaque.
-     */
+    /** Démarre une attaque. */
     public void startAttack() {
         if (!canAttack()) {
             return;
@@ -77,23 +58,17 @@ public class PlayerAttackComponent {
         attackTime = 0f;
     }
 
-    /**
-     * Enregistre que l'attaque a touché (évite les multi-hits).
-     */
+    /** Enregistre que l'attaque a touché (évite les multi-hits). */
     public void registerHit() {
         hitRegistered = true;
     }
 
-    /**
-     * Vérifie si le joueur peut attaquer.
-     *
-     * @return true si une attaque est possible
-     */
+    /** Vérifie si le joueur peut attaquer. */
     public boolean canAttack() {
         return !attacking && cooldown <= 0;
     }
 
-    // === Getters ===
+    //Getters
 
     public boolean isAttacking() {
         return attacking;

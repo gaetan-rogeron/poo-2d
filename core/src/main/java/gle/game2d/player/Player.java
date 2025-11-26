@@ -7,37 +7,27 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-/**
- * Représente le personnage joueur dans le jeu.
- * Utilise le patron Strategy pour les comportements et Composite pour les composants.
- *
- * @author Votre Nom
- * @version 1.0
- */
+/** Représente le personnage joueur dans le jeu. Utilise le patron Strategy pour les comportements et Composite pour les composants. */
 public class Player {
-    // === Constantes ===
+    //Constantes
     private static final int PLAYER_WIDTH = 16;
     private static final int PLAYER_HEIGHT = 16;
     private static final float PLAYER_SPEED = 100f;
 
-    // === Composants (Composition) ===
+    //Composants (Composition)
     private final PlayerHealthComponent healthComponent;
     private final PlayerMovementComponent movementComponent;
     private final PlayerAttackComponent attackComponent;
     private final PlayerAnimationComponent animationComponent;
 
-    // === État ===
+    //État
     private PlayerDirection currentDirection;
     private float stateTime;
 
-    // === Référence à la carte de collision ===
+    //Référence à la carte de collision
     private final CollisionMap collisionMap;
 
-    /**
-     * Constructeur du joueur.
-     *
-     * @param collisionMap la carte de collision pour les déplacements
-     */
+    /** Constructeur du joueur. */
     public Player(CollisionMap collisionMap) {
         this.collisionMap = collisionMap;
         this.healthComponent = new PlayerHealthComponent(100);
@@ -50,12 +40,7 @@ public class Player {
         this.stateTime = 0f;
     }
 
-    /**
-     * Met à jour l'état du joueur.
-     * Applique le patron Template Method.
-     *
-     * @param deltaTime temps écoulé depuis la dernière frame
-     */
+    /** Met à jour l'état du joueur. Applique le patron Template Method. */
     public void update(float deltaTime) {
         updateStateTime(deltaTime);
         updateComponents(deltaTime);
@@ -123,11 +108,7 @@ public class Player {
             Gdx.input.isKeyJustPressed(Input.Keys.X);
     }
 
-    /**
-     * Dessine le joueur à l'écran.
-     *
-     * @param batch le SpriteBatch pour le rendu
-     */
+    /** Dessine le joueur à l'écran. */
     public void draw(SpriteBatch batch) {
         if (healthComponent.shouldBlink()) {
             return;
@@ -161,11 +142,7 @@ public class Player {
             : stateTime;
     }
 
-    /**
-     * Récupère la hitbox d'attaque si le joueur attaque.
-     *
-     * @return la hitbox d'attaque ou null
-     */
+    /** Récupère la hitbox d'attaque si le joueur attaque. */
     public Rectangle getAttackHitbox() {
         if (!attackComponent.isAttacking() || attackComponent.isHitRegistered()) {
             return null;
@@ -193,7 +170,7 @@ public class Player {
         return hitbox;
     }
 
-    // === Accesseurs publics ===
+    //Accesseurs publics
 
     public void takeDamage(int damage) {
         healthComponent.takeDamage(damage);

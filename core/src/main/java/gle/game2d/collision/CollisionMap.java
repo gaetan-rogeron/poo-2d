@@ -5,31 +5,18 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
-/**
- * Gère les collisions avec la carte de tuiles.
- * Vérifie si une position donnée entre en collision avec des tuiles bloquantes.
- * Applique le patron Facade pour simplifier l'accès aux données de la carte Tiled.
- *
- * @author Votre Nom
- * @version 1.0
- */
+/** Gère les collisions avec la carte de tuiles. Vérifie si une position donnée entre en collision avec des tuiles bloquantes. Applique le patron Facade pour simplifier l'accès aux données de la carte Tiled. */
 public class CollisionMap {
-    // === Constantes ===
+    //Constantes
     private static final int DEFAULT_TILE_SIZE = 16;
     private static final String BLOCKED_PROPERTY = "blocked";
 
-    // === Attributs privés ===
+    //Attributs privés
     private final TiledMapTileLayer layer;
     private final boolean layerBlocked;
     private final int tileSize;
 
-    /**
-     * Constructeur de la carte de collision.
-     *
-     * @param map la carte Tiled
-     * @param layerName le nom de la couche de collision
-     * @throws IllegalArgumentException si la couche n'existe pas
-     */
+    /** Constructeur de la carte de collision. */
     public CollisionMap(TiledMap map, String layerName) {
         if (map == null) {
             throw new IllegalArgumentException("La carte ne peut pas être null");
@@ -54,13 +41,7 @@ public class CollisionMap {
             + " (taille tuile: " + tileSize + ", bloquée: " + layerBlocked + ")");
     }
 
-    /**
-     * Vérifie si une tuile à une position donnée est bloquante.
-     *
-     * @param col colonne de la tuile
-     * @param row ligne de la tuile
-     * @return true si la tuile est bloquante
-     */
+    /** Vérifie si une tuile à une position donnée est bloquante. */
     public boolean isBlockedTile(int col, int row) {
         // Hors limites = bloqué
         if (isOutOfBounds(col, row)) {
@@ -90,26 +71,12 @@ public class CollisionMap {
             && Boolean.parseBoolean(tileProperties.get(BLOCKED_PROPERTY).toString());
     }
 
-    /**
-     * Vérifie si une position est hors limites de la carte.
-     *
-     * @param col colonne
-     * @param row ligne
-     * @return true si hors limites
-     */
+    /** Vérifie si une position est hors limites de la carte. */
     private boolean isOutOfBounds(int col, int row) {
         return col < 0 || row < 0 || col >= layer.getWidth() || row >= layer.getHeight();
     }
 
-    /**
-     * Vérifie si une zone rectangulaire entre en collision avec des tuiles bloquantes.
-     *
-     * @param x position X en pixels
-     * @param y position Y en pixels
-     * @param width largeur de la zone
-     * @param height hauteur de la zone
-     * @return true si collision détectée
-     */
+    /** Vérifie si une zone rectangulaire entre en collision avec des tuiles bloquantes. */
     public boolean collides(float x, float y, float width, float height) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException("Largeur et hauteur doivent être positives");
@@ -133,76 +100,42 @@ public class CollisionMap {
         return false;
     }
 
-    /**
-     * Convertit une coordonnée en pixels en indice de tuile.
-     *
-     * @param pixelCoord coordonnée en pixels
-     * @return indice de tuile
-     */
+    /** Convertit une coordonnée en pixels en indice de tuile. */
     private int pixelToTileCoord(float pixelCoord) {
         return (int) Math.floor(pixelCoord / tileSize);
     }
 
-    /**
-     * Convertit un indice de tuile en coordonnée en pixels.
-     *
-     * @param tileCoord indice de tuile
-     * @return coordonnée en pixels
-     */
+    /** Convertit un indice de tuile en coordonnée en pixels. */
     public float tileToPixelCoord(int tileCoord) {
         return tileCoord * tileSize;
     }
 
-    /**
-     * Obtient la taille d'une tuile.
-     *
-     * @return taille en pixels
-     */
+    /** Obtient la taille d'une tuile. */
     public int getTileSize() {
         return tileSize;
     }
 
-    /**
-     * Obtient la largeur de la carte en tuiles.
-     *
-     * @return largeur en tuiles
-     */
+    /** Obtient la largeur de la carte en tuiles. */
     public int getMapWidthInTiles() {
         return layer.getWidth();
     }
 
-    /**
-     * Obtient la hauteur de la carte en tuiles.
-     *
-     * @return hauteur en tuiles
-     */
+    /** Obtient la hauteur de la carte en tuiles. */
     public int getMapHeightInTiles() {
         return layer.getHeight();
     }
 
-    /**
-     * Obtient la largeur de la carte en pixels.
-     *
-     * @return largeur en pixels
-     */
+    /** Obtient la largeur de la carte en pixels. */
     public float getMapWidthInPixels() {
         return layer.getWidth() * tileSize;
     }
 
-    /**
-     * Obtient la hauteur de la carte en pixels.
-     *
-     * @return hauteur en pixels
-     */
+    /** Obtient la hauteur de la carte en pixels. */
     public float getMapHeightInPixels() {
         return layer.getHeight() * tileSize;
     }
 
-    /**
-     * Vérifie si la couche entière est bloquante.
-     *
-     * @return true si bloquante
-     */
+    /** Vérifie si la couche entière est bloquante. */
     public boolean isLayerBlocked() {
         return layerBlocked;
     }

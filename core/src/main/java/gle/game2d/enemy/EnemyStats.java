@@ -1,12 +1,6 @@
 package gle.game2d.enemy;
 
-/**
- * Statistiques d'un ennemi.
- * Classe immutable construite avec le patron Builder.
- *
- * @author Votre Nom
- * @version 1.0
- */
+/** Statistiques d'un ennemi. Classe immutable construite avec le patron Builder. */
 class EnemyStats {
     private final int width;
     private final int height;
@@ -14,11 +8,7 @@ class EnemyStats {
     private final int maxHealth;
     private final int damage;
 
-    /**
-     * Constructeur privé (utilisé par le Builder).
-     *
-     * @param builder le builder contenant les valeurs
-     */
+    /** Constructeur privé (utilisé par le Builder). */
     private EnemyStats(Builder builder) {
         this.width = builder.width;
         this.height = builder.height;
@@ -27,7 +17,7 @@ class EnemyStats {
         this.damage = builder.damage;
     }
 
-    // === Accesseurs (lecture seule) ===
+    //Accesseurs (lecture seule)
 
     public int getWidth() {
         return width;
@@ -49,13 +39,7 @@ class EnemyStats {
         return damage;
     }
 
-    /**
-     * Builder pour construire des EnemyStats.
-     * Applique le patron Builder.
-     *
-     * @author Votre Nom
-     * @version 1.0
-     */
+    /** Builder pour construire des EnemyStats. Applique le patron Builder. */
     public static class Builder {
         private int width = 32;
         private int height = 32;
@@ -63,13 +47,7 @@ class EnemyStats {
         private int maxHealth = 50;
         private int damage = 10;
 
-        /**
-         * Définit les dimensions.
-         *
-         * @param width largeur
-         * @param height hauteur
-         * @return this pour chaînage
-         */
+        /** Définit les dimensions. */
         public Builder withDimensions(int width, int height) {
             if (width <= 0 || height <= 0) {
                 throw new IllegalArgumentException("Dimensions doivent être positives");
@@ -79,12 +57,7 @@ class EnemyStats {
             return this;
         }
 
-        /**
-         * Définit la vitesse.
-         *
-         * @param speed vitesse
-         * @return this pour chaînage
-         */
+        /** Définit la vitesse. */
         public Builder withSpeed(float speed) {
             if (speed < 0) {
                 throw new IllegalArgumentException("Vitesse ne peut pas être négative");
@@ -93,12 +66,7 @@ class EnemyStats {
             return this;
         }
 
-        /**
-         * Définit la vie.
-         *
-         * @param maxHealth vie maximum
-         * @return this pour chaînage
-         */
+        /** Définit la vie. */
         public Builder withHealth(int maxHealth) {
             if (maxHealth <= 0) {
                 throw new IllegalArgumentException("Vie doit être positive");
@@ -107,12 +75,7 @@ class EnemyStats {
             return this;
         }
 
-        /**
-         * Définit les dégâts.
-         *
-         * @param damage dégâts
-         * @return this pour chaînage
-         */
+        /** Définit les dégâts. */
         public Builder withDamage(int damage) {
             if (damage < 0) {
                 throw new IllegalArgumentException("Dégâts ne peuvent pas être négatifs");
@@ -121,11 +84,7 @@ class EnemyStats {
             return this;
         }
 
-        /**
-         * Construit l'objet EnemyStats.
-         *
-         * @return statistiques d'ennemi
-         */
+        /** Construit l'objet EnemyStats. */
         public EnemyStats build() {
             return new EnemyStats(this);
         }

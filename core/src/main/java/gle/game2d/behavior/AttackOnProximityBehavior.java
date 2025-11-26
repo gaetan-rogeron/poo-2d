@@ -4,25 +4,14 @@ import gle.game2d.enemy.EnemyBase;
 import gle.game2d.player.Player;
 
 /**
- * Comportement : Attaquer si proche, sinon suivre.
- * L'ennemi attaque le joueur s'il est à portée, sinon le suit.
- * Stratégie concrète du patron Strategy.
- *
- * @author Votre Nom
- * @version 1.0
+ * Comportement : Attaquer si proche, sinon suivre. L'ennemi attaque le joueur s'il est à portée, sinon le suit. Stratégie concrète du patron Strategy.
  */
 public class AttackOnProximityBehavior implements IEnemyBehavior {
     private final float attackRange;
     private final float cooldownTime;
     private float cooldown;
 
-    /**
-     * Constructeur du comportement d'attaque.
-     *
-     * @param attackRange portée d'attaque (en pixels)
-     * @param cooldownTime temps de cooldown entre attaques (en secondes)
-     * @throws IllegalArgumentException si les paramètres sont invalides
-     */
+    /** Constructeur du comportement d'attaque. */
     public AttackOnProximityBehavior(float attackRange, float cooldownTime) {
         if (attackRange <= 0) {
             throw new IllegalArgumentException("La portée d'attaque doit être positive");
@@ -36,14 +25,7 @@ public class AttackOnProximityBehavior implements IEnemyBehavior {
         this.cooldown = 0f;
     }
 
-    /**
-     * Exécute le comportement d'attaque conditionnelle.
-     * Attaque si à portée et cooldown terminé, sinon suit le joueur.
-     *
-     * @param enemy l'ennemi exécutant le comportement
-     * @param deltaTime temps écoulé
-     * @param player référence au joueur
-     */
+    /** Exécute le comportement d'attaque conditionnelle. Attaque si à portée et cooldown terminé, sinon suit le joueur. */
     @Override
     public void execute(EnemyBase enemy, float deltaTime, Player player) {
         // Mise à jour du cooldown
@@ -60,12 +42,7 @@ public class AttackOnProximityBehavior implements IEnemyBehavior {
         }
     }
 
-    /**
-     * Attaque le joueur.
-     *
-     * @param enemy l'ennemi qui attaque
-     * @param player le joueur cible
-     */
+    /** Attaque le joueur. */
     private void attackPlayer(EnemyBase enemy, Player player) {
         player.takeDamage(enemy.getDamage());
         cooldown = cooldownTime;
@@ -73,38 +50,22 @@ public class AttackOnProximityBehavior implements IEnemyBehavior {
             + cooldownTime + "s)");
     }
 
-    /**
-     * Obtient la portée d'attaque.
-     *
-     * @return portée d'attaque
-     */
+    /** Obtient la portée d'attaque. */
     public float getAttackRange() {
         return attackRange;
     }
 
-    /**
-     * Obtient le temps de cooldown.
-     *
-     * @return temps de cooldown
-     */
+    /** Obtient le temps de cooldown. */
     public float getCooldownTime() {
         return cooldownTime;
     }
 
-    /**
-     * Obtient le cooldown restant.
-     *
-     * @return cooldown restant
-     */
+    /** Obtient le cooldown restant. */
     public float getRemainingCooldown() {
         return Math.max(0, cooldown);
     }
 
-    /**
-     * Vérifie si l'ennemi peut attaquer.
-     *
-     * @return true si le cooldown est terminé
-     */
+    /** Vérifie si l'ennemi peut attaquer. */
     public boolean canAttack() {
         return cooldown <= 0;
     }

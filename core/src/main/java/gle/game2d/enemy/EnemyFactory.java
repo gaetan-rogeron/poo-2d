@@ -5,34 +5,16 @@ import gle.game2d.behavior.ChasePlayerBehavior;
 import gle.game2d.behavior.AttackOnProximityBehavior;
 import gle.game2d.collision.CollisionMap;
 
-/**
- * Factory pour créer des ennemis.
- * Applique le patron Factory Method.
- *
- * @author Votre Nom
- * @version 1.0
- */
+/** Factory pour créer des ennemis. Applique le patron Factory Method. */
 class EnemyFactory {
 
-    /**
-     * Énumération des types d'ennemis disponibles.
-     */
+    /** Énumération des types d'ennemis disponibles. */
     public enum EnemyType {
         SLIME,
         SKELETON
     }
 
-    /**
-     * Crée un ennemi selon son type.
-     * Factory Method Pattern.
-     *
-     * @param type type d'ennemi
-     * @param x position X
-     * @param y position Y
-     * @param collisionMap carte de collision
-     * @return l'ennemi créé
-     * @throws IllegalArgumentException si le type est null
-     */
+    /** Crée un ennemi selon son type. Factory Method Pattern. */
     public static IEnemy createEnemy(EnemyType type, float x, float y,
                                      CollisionMap collisionMap) {
         if (type == null) {
@@ -49,17 +31,7 @@ class EnemyFactory {
         }
     }
 
-    /**
-     * Crée un ennemi selon son type (version String pour compatibilité).
-     * Factory Method Pattern.
-     *
-     * @param enemyType type d'ennemi ("Slime", "Skeleton")
-     * @param x position X
-     * @param y position Y
-     * @param collisionMap carte de collision
-     * @return l'ennemi créé
-     * @throws IllegalArgumentException si le type est inconnu
-     */
+    /** Crée un ennemi selon son type (version String pour compatibilité). Factory Method Pattern. */
     public static IEnemy createEnemy(String enemyType, float x, float y,
                                      CollisionMap collisionMap) {
         if (enemyType == null || enemyType.isEmpty()) {
@@ -75,14 +47,7 @@ class EnemyFactory {
         throw new IllegalArgumentException("Type d'ennemi inconnu: " + enemyType);
     }
 
-    /**
-     * Crée un Slime.
-     *
-     * @param x position X
-     * @param y position Y
-     * @param collisionMap carte de collision
-     * @return le Slime créé
-     */
+    /** Crée un Slime. */
     private static IEnemy createSlime(float x, float y, CollisionMap collisionMap) {
         EnemyStats stats = new EnemyStats.Builder()
             .withDimensions(64, 64)
@@ -96,14 +61,7 @@ class EnemyFactory {
         return new SlimeEnemy(x, y, stats, behavior, collisionMap);
     }
 
-    /**
-     * Crée un Skeleton.
-     *
-     * @param x position X
-     * @param y position Y
-     * @param collisionMap carte de collision
-     * @return le Skeleton créé
-     */
+    /** Crée un Skeleton. */
     private static IEnemy createSkeleton(float x, float y, CollisionMap collisionMap) {
         EnemyStats stats = new EnemyStats.Builder()
             .withDimensions(32, 32)

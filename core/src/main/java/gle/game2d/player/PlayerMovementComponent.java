@@ -3,13 +3,7 @@ package gle.game2d.player;
 import gle.game2d.collision.CollisionMap;
 import com.badlogic.gdx.math.Vector2;
 
-/**
- * Gère le déplacement du joueur et la détection de collision.
- * Single Responsibility Principle: cette classe s'occupe uniquement du mouvement.
- *
- * @author Votre Nom
- * @version 1.0
- */
+/** Gère le déplacement du joueur et la détection de collision. Single Responsibility Principle: cette classe s'occupe uniquement du mouvement. */
 public class PlayerMovementComponent {
     private final float speed;
     private final int width;
@@ -17,13 +11,7 @@ public class PlayerMovementComponent {
     private final Vector2 position;
     private boolean moving;
 
-    /**
-     * Constructeur.
-     *
-     * @param speed Vitesse de déplacement (pixels par seconde)
-     * @param width Largeur du joueur
-     * @param height Hauteur du joueur
-     */
+    /** Constructeur. */
     public PlayerMovementComponent(float speed, int width, int height) {
         this.speed = speed;
         this.width = width;
@@ -32,13 +20,7 @@ public class PlayerMovementComponent {
         this.moving = false;
     }
 
-    /**
-     * Déplace le joueur selon une direction.
-     *
-     * @param direction Direction normalisée du mouvement
-     * @param deltaTime Temps écoulé
-     * @param collisionMap Carte de collision
-     */
+    /** Déplace le joueur selon une direction. */
     public void move(Vector2 direction, float deltaTime, CollisionMap collisionMap) {
         if (direction.len2() > 0) {
             direction.nor();
@@ -90,7 +72,7 @@ public class PlayerMovementComponent {
         }
     }
 
-    // === Getters et Setters ===
+    //Getters et Setters
 
     public Vector2 getPosition() {
         return position.cpy();

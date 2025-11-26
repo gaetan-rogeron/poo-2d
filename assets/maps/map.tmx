@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="15">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="32">
  <tileset firstgid="1" source="Tiles.tsx"/>
  <tileset firstgid="193" source="Player.tsx"/>
  <tileset firstgid="253" source="Slime_Green.tsx"/>
  <tileset firstgid="277" source="Skeleton.tsx"/>
+ <tileset firstgid="337" source="Village.tsx"/>
+ <tileset firstgid="626" source="Fences.tsx"/>
+ <tileset firstgid="642" source="Oak_Tree.tsx"/>
+ <tileset firstgid="662" source="Halloween.tsx"/>
  <layer id="1" name="Background" width="60" height="60">
   <data encoding="base64" compression="zlib">
-   eJztmEtyw0AIRHUyHy9e57NNsk6y9/mi7BSKgW5gbGR5QfkzGhdvukHIl2VZLpPjeY2XNV43373dKGaz/sX7Gh9rfB6E92uN7zV+DsJb6ecnER15s362+Fj+zn6WDAiPx97Vz1rOrH+13+jqZ401UrNyT0c/b3OU70c6ezXe1c8jVpm3VdfW525+RnWy9LbOopOfR7p6Nc38Tic/yzyRe5FVy9r1Xfxs1abVk9k+3sXPnpaWvl4ddPMzOleMZhBmBuvgZ0ZPTVPtdU/6InlrtdrleSGiL8OM9KlO/YrpvxYv0rOuwatFJS86h+yB1/M7+7zUgZdlZntUR17E1xX/AXTj9YL1RWdeL47Gq/E9eB+8e+aVjCzvrWKP53wPvGcR98yr8c1izuR8GgTDO+JieaU/RvsznOwawysZvGvQM4uwVlzD6qjph9S6XGc9W3UmlbyIBxBehnEGL8KIcCO8GS2Rc/J6s6ebto4wR3k9j0d5z8v/3Nk+5Z0Rmyvq8QzvebCm7WGYGV62liO8mj+9fmtdo12L5DqjZ3laoTNXNe+sHu31JUTHCt4K1gpeK++ZvBFWxs+RvBEfoP3qtHnNaOvtn8GL1L/Fm9U1y+uxyjOJzBsZXqlphb7MvImcS1X9ju7ZM3glI8rq8Vb2pwpe7zNyXhW8kT1Ibt4s7T1LaGvZ3KN9HKlHaxaxvre8ndUr6n8rJ00/jZ/pVxW8mXmE5fV6FhpRjsw8gvJ6NcpwVvBGWbO8UdYIb1ZXllf2oYiHo7xVrCxvpl4R3i0z+18sGr9axcp1
+   eJzt2E0OgjAQBeCiB+M6eAxXXsCb+HMr7yAJkDRNO522tHSGt3gLBU0/ZqaIX2PM94D8LvVyvy7xHTvC2srrM2v0Umat3lBfw9vea/eeu77X/Po95xPYfzR47XVSey1ndnv0cu2le1WP3lh9NHqpWpdYe/dy9p/UcyR5Yx5OH0jzhszcvpfoDc02Z76lelPrqsXLnduevSX3XKnelNmsXd9pWHIb2nipa9BifjdrDS/3/irdm9O7Ob+zpXpz9iqfl2PY08upU+lxO/bat0wNkuPkPitQ5+6xdvd6cRKz5Mwm5zO5/Via0lpK97rrTbVyv6cn716BV7fXNrvvP80xqX09xzXu+xq9ozmPdzTn8lK9rNFL1VajNxZ44YUXXnjhhRdeeOGFF15463ofa1K8oWdWCV7b7HP7rNK9rtmO+z+TFm/IfgZvbH5bBF544YVXivcPoT3XJw==
   </data>
  </layer>
  <layer id="2" name="Collision" width="60" height="60">
@@ -14,19 +18,33 @@
    <property name="blocked" type="bool" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2MkKwkAQhOFxBcH95nrTu76772cNGPCgIHY7pif/B3XJoUlBSCadUlm3R7qCvnXLXSf/voknJ+X8w/lt63tRri+u95S+MjDOb1vfd2bKXFkY50Tpu1G2ys44J0pfL/StW4S+Q2WkjB1mRThvLJWpsnaYFaHvXjkoR4dZ+Vlue19P9K1b1/pGeF95oi8Qk+e5NIJ8Ll0ln3NpBLlv/v7St06e/x3favaOJWPdcVo0e8eSse44LZq9Y8lYd5wAAAAAAAAAAAAA8Ik7OoYb1A==
+   eJztmMlOFEEch7tnBnCNhsQFGNCTG3rBqGz6Dhq3Z3BFJXowEnFfYAYFz/oMmHDXk4BP4HZyS5STK5z8OplJymJ6pteqoahf8iXT3VOV/1dVXdM9jlM9lzM1vhAhUzAXoN8r2f+Pr2Yrfy/JxPW9QfubcAtul/oy2fcO7e/CPbgfw/dMNhnfwUx1hmP6PqD9QxiB0RTnt4tre0OOxw/XcX7CL/gNf+AvzMOCG66vcgp4FWEMHkm++6hvf5UaPd8u4XrS6zlHDQ3QCE2wAlbCKlgdcZ4f024cJuCJ5HuY+o9UcRiXrk0m4HuNeRsqzd0GatgIm2AztEArtEE+wX267HuW+s8p2IPEFHAtlny3UcN22AE7YRd0wm7Yk4KvjjzF9VnJ9wA1dEMP9EIf9MNBOKTA9xXnpmEGZuG1pjEJGm/YMhWQl6yf70fOfYLP8AW+1rnvWp/z66Rj3/XMwLiQgSzkFN/bYRPXN49fO3TAFthaB77nWbQD7uLPXuL6duPXA73QB/2S7wvavFS8xq/jN+wu/uwlru9R/I7BcTgBJyXf97T5oNg3Bw0CjcK1FmitQJvUh5/vAH4X4CJcgkHJd542C0K7Ws9nSWQ9rBFojtCHn+8ItY9CAYowVsOl1vNZEknTN2xUPJ/loV2gI0IfOp+vdKRefKfZa2dgNuK7X9CIvkH2nLDvtUHzBs+38E6hr4o9p1Ke4/gNvsMcTKboLPrqeCdUnbTv3yj/7djYRE29/B6pivUNllPsQaeX4D6kc36nNOH5pkk58vkJRw9pj6fffOpI2Xe5xPqaHetrdqyv2bG+Zsf6mh3ra3asr9mxvmbH+pod62tjs3Sz3Naz9TU71tfs6PT9B3Us+I8=
   </data>
  </layer>
  <objectgroup id="3" name="Object">
-  <object id="2" name="Player" gid="193" x="15.2433" y="84.3447" width="33.3333" height="32"/>
-  <object id="4" name="Slime" gid="253" x="187.333" y="71.3333" width="64" height="64"/>
-  <object id="5" name="Slime" gid="261" x="196.667" y="181.333" width="64" height="64"/>
-  <object id="6" name="Slime" gid="253" x="312" y="112" width="64" height="64"/>
-  <object id="7" name="Slime" gid="253" x="225.333" y="118" width="64" height="64"/>
-  <object id="8" name="Slime" gid="253" x="112.667" y="190" width="64" height="64"/>
-  <object id="9" name="Slime" gid="253" x="102" y="83.3333" width="64" height="64"/>
-  <object id="10" name="Skeleton" gid="277" x="193.333" y="232.667" width="32" height="32"/>
-  <object id="11" name="Skeleton" gid="277" x="60.6667" y="271.333" width="32" height="32"/>
-  <object id="12" name="Skeleton" gid="277" x="84" y="216.667" width="32" height="32"/>
+  <object id="2" name="Player" gid="193" x="63.2433" y="188.345" width="33.3333" height="32"/>
+  <object id="4" name="Slime" gid="253" x="347.333" y="470" width="64" height="64"/>
+  <object id="5" name="Slime" gid="261" x="322" y="77.3333" width="64" height="64"/>
+  <object id="6" name="Slime" gid="253" x="389.334" y="369.334" width="64" height="64"/>
+  <object id="7" name="Slime" gid="253" x="302.667" y="390" width="64" height="64"/>
+  <object id="8" name="Slime" gid="253" x="214" y="93.9997" width="64" height="64"/>
+  <object id="9" name="Slime" gid="253" x="108.667" y="339.334" width="64" height="64"/>
+  <object id="10" name="Skeleton" gid="277" x="872" y="63.3333" width="32" height="32"/>
+  <object id="11" name="Skeleton" gid="277" x="754" y="52.6663" width="32" height="32"/>
+  <object id="12" name="Skeleton" gid="277" x="832" y="152.667" width="32" height="32"/>
+  <object id="15" name="Slime" gid="253" x="57.3333" y="464" width="64" height="64"/>
+  <object id="16" name="Slime" gid="253" x="294.667" y="138.667" width="64" height="64"/>
+  <object id="17" name="Slime" gid="253" x="108" y="418.667" width="64" height="64"/>
+  <object id="18" name="Skeleton" gid="277" x="748" y="120" width="32" height="32"/>
+  <object id="19" name="Skeleton" gid="277" x="886.667" y="304" width="32" height="32"/>
+  <object id="20" name="Skeleton" gid="277" x="853.333" y="318.667" width="32" height="32"/>
+  <object id="21" name="Skeleton" gid="277" x="886.667" y="354.667" width="32" height="32"/>
+  <object id="22" name="Skeleton" gid="277" x="814.667" y="348" width="32" height="32"/>
+  <object id="26" name="Skeleton" gid="277" x="566.667" y="68" width="32" height="32"/>
+  <object id="27" name="Skeleton" gid="277" x="520" y="60" width="32" height="32"/>
+  <object id="28" name="Skeleton" gid="277" x="534.667" y="124" width="32" height="32"/>
+  <object id="29" name="Skeleton" gid="277" x="654.667" y="185.333" width="32" height="32"/>
+  <object id="30" name="Skeleton" gid="277" x="693.333" y="181.333" width="32" height="32"/>
+  <object id="31" name="Skeleton" gid="277" x="900" y="213.333" width="32" height="32"/>
  </objectgroup>
 </map>

@@ -1,13 +1,6 @@
 package gle.game2d.player;
 
-/**
- * Représente une direction du joueur.
- * Alternative aux énumérations selon les recommandations du cours PCOO.
- * Utilise le patron Singleton pour chaque direction.
- *
- * @author Votre Nom
- * @version 1.0
- */
+/** Représente une direction du joueur. Alternative aux énumérations selon les recommandations du cours PCOO. Utilise le patron Singleton pour chaque direction. */
 public final class PlayerDirection {
     private static final int DIR_DOWN = 0;
     private static final int DIR_RIGHT = 1;
@@ -21,20 +14,12 @@ public final class PlayerDirection {
 
     private final int directionCode;
 
-    /**
-     * Constructeur privé (Patron Singleton).
-     *
-     * @param directionCode code de la direction
-     */
+    /** Constructeur privé (Patron Singleton). */
     private PlayerDirection(int directionCode) {
         this.directionCode = directionCode;
     }
 
-    /**
-     * Factory Method pour créer/récupérer la direction DOWN.
-     *
-     * @return instance de direction DOWN
-     */
+    /** Factory Method pour créer/récupérer la direction DOWN. */
     public static PlayerDirection createDown() {
         if (instanceDown == null) {
             synchronized (PlayerDirection.class) {
@@ -46,11 +31,7 @@ public final class PlayerDirection {
         return instanceDown;
     }
 
-    /**
-     * Factory Method pour créer/récupérer la direction RIGHT.
-     *
-     * @return instance de direction RIGHT
-     */
+    /** Factory Method pour créer/récupérer la direction RIGHT. */
     public static PlayerDirection createRight() {
         if (instanceRight == null) {
             synchronized (PlayerDirection.class) {
@@ -62,11 +43,7 @@ public final class PlayerDirection {
         return instanceRight;
     }
 
-    /**
-     * Factory Method pour créer/récupérer la direction UP.
-     *
-     * @return instance de direction UP
-     */
+    /** Factory Method pour créer/récupérer la direction UP. */
     public static PlayerDirection createUp() {
         if (instanceUp == null) {
             synchronized (PlayerDirection.class) {
@@ -78,11 +55,7 @@ public final class PlayerDirection {
         return instanceUp;
     }
 
-    /**
-     * Factory Method pour créer/récupérer la direction LEFT.
-     *
-     * @return instance de direction LEFT
-     */
+    /** Factory Method pour créer/récupérer la direction LEFT. */
     public static PlayerDirection createLeft() {
         if (instanceLeft == null) {
             synchronized (PlayerDirection.class) {
@@ -114,11 +87,7 @@ public final class PlayerDirection {
         return this.directionCode;
     }
 
-    /**
-     * Retourne la clé pour l'animation.
-     *
-     * @return clé de direction pour animations
-     */
+    /** Retourne la clé pour l'animation. */
     public String toAnimationKey() {
         switch (directionCode) {
             case DIR_DOWN: return "down";

@@ -1,12 +1,6 @@
 package gle.game2d.player;
 
-/**
- * Gère la santé du joueur et l'invincibilité temporaire.
- * Single Responsibility Principle: cette classe s'occupe uniquement de la santé.
- *
- * @author Votre Nom
- * @version 1.0
- */
+/** Gère la santé du joueur et l'invincibilité temporaire. Single Responsibility Principle : cette classe s'occupe uniquement de la santé. */
 public class PlayerHealthComponent {
     private static final float INVINCIBILITY_DURATION = 1.0f;
     private static final int BLINK_FREQUENCY = 10;
@@ -16,11 +10,7 @@ public class PlayerHealthComponent {
     private boolean invincible;
     private float invincibilityTimer;
 
-    /**
-     * Constructeur.
-     *
-     * @param maxHealth Points de vie maximum
-     */
+    /** Constructeur. */
     public PlayerHealthComponent(int maxHealth) {
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
@@ -28,11 +18,7 @@ public class PlayerHealthComponent {
         this.invincibilityTimer = 0f;
     }
 
-    /**
-     * Met à jour l'état de santé (invincibilité).
-     *
-     * @param deltaTime Temps écoulé
-     */
+    /** Met à jour l'état de santé (invincibilité). */
     public void update(float deltaTime) {
         if (invincible) {
             invincibilityTimer -= deltaTime;
@@ -42,11 +28,7 @@ public class PlayerHealthComponent {
         }
     }
 
-    /**
-     * Inflige des dégâts au joueur.
-     *
-     * @param damage Montant des dégâts
-     */
+    /** Inflige des dégâts au joueur. */
     public void takeDamage(int damage) {
         if (invincible || !isAlive()) {
             return;
@@ -67,11 +49,7 @@ public class PlayerHealthComponent {
         }
     }
 
-    /**
-     * Soigne le joueur.
-     *
-     * @param amount Montant de soin
-     */
+    /** Soigne le joueur. */
     public void heal(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("Heal amount cannot be negative");
@@ -85,18 +63,12 @@ public class PlayerHealthComponent {
         System.out.println("Player healed " + amount + ". Health: " + currentHealth + "/" + maxHealth);
     }
 
-    /**
-     * Appelé quand le joueur meurt.
-     */
+    /** Appelé quand le joueur meurt. */
     private void onDeath() {
         System.out.println("Player died!");
     }
 
-    /**
-     * Détermine si le joueur doit clignoter (pendant l'invincibilité).
-     *
-     * @return true si le joueur ne doit pas être affiché
-     */
+    /** Détermine si le joueur doit clignoter (pendant l'invincibilité). */
     public boolean shouldBlink() {
         if (!invincible) {
             return false;
@@ -106,7 +78,7 @@ public class PlayerHealthComponent {
         return blinkCycle % 2 == 1;
     }
 
-    // === Getters ===
+    //Getters
 
     public boolean isAlive() {
         return currentHealth > 0;
@@ -135,11 +107,7 @@ public class PlayerHealthComponent {
         }
     }
 
-    /**
-     * Calcule le pourcentage de vie.
-     *
-     * @return Valeur entre 0.0 et 1.0
-     */
+    /** Calcule le pourcentage de vie. */
     public float getHealthPercentage() {
         return (float) currentHealth / maxHealth;
     }
