@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="32">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="63">
  <tileset firstgid="1" source="Tiles.tsx"/>
  <tileset firstgid="193" source="Player.tsx"/>
  <tileset firstgid="253" source="Slime_Green.tsx"/>
@@ -8,9 +8,22 @@
  <tileset firstgid="626" source="Fences.tsx"/>
  <tileset firstgid="642" source="Oak_Tree.tsx"/>
  <tileset firstgid="662" source="Halloween.tsx"/>
+ <tileset firstgid="998" source="King_Slime.tsx"/>
+ <tileset firstgid="1002" source="dungeon_gathering.tsx"/>
+ <tileset firstgid="1562" source="potion.tsx"/>
+ <tileset firstgid="1568" source="Potion1.tsx"/>
+ <tileset firstgid="1569" source="Sword.tsx"/>
+ <tileset firstgid="1570" source="Cow.tsx"/>
+ <tileset firstgid="1574" source="Sheep.tsx"/>
+ <tileset firstgid="1578" source="Pig.tsx"/>
  <layer id="1" name="Background" width="60" height="60">
   <data encoding="base64" compression="zlib">
-   eJzt2E0OgjAQBeCiB+M6eAxXXsCb+HMr7yAJkDRNO522tHSGt3gLBU0/ZqaIX2PM94D8LvVyvy7xHTvC2srrM2v0Umat3lBfw9vea/eeu77X/Po95xPYfzR47XVSey1ndnv0cu2le1WP3lh9NHqpWpdYe/dy9p/UcyR5Yx5OH0jzhszcvpfoDc02Z76lelPrqsXLnduevSX3XKnelNmsXd9pWHIb2nipa9BifjdrDS/3/irdm9O7Ob+zpXpz9iqfl2PY08upU+lxO/bat0wNkuPkPitQ5+6xdvd6cRKz5Mwm5zO5/Via0lpK97rrTbVyv6cn716BV7fXNrvvP80xqX09xzXu+xq9ozmPdzTn8lK9rNFL1VajNxZ44YUXXnjhhRdeeOGFF15463ofa1K8oWdWCV7b7HP7rNK9rtmO+z+TFm/IfgZvbH5bBF544YVXivcPoT3XJw==
+   eJzt2EtSwzAMBuC2wJ3YZabDUYApWfPasuB1AV4X4LUEeiuW3aNMq0F4bEe248QSWfwT0hTIF1lKm+VkMlkOkO9ZvlxsrWM7NoS1L6/NrNHrM2v1utb16O3fS9eeeX4fsP8J+XLMHw1eep6+Wcvp3RK9XHvqrCrR21YfjV5frVOspXs58yf0PZK8bR7OOpDmdZm5616i19XbnP6W6g2tqxYvt29L9qbcc6V6Q3ozd30X03WOpv14fdegj/5Faw4v9/4q3RuzdmM+Z0v1xswqm5djSPGuZuv46hV6LULqTM8ds8iU1ex3G+PkflfwvbcLh3m9fGmszbbNEtObnN+J7b/UpNZSutc831Ar9++U5O0qo1e3l5rN13e3h0nu64n3efN1TV70VcRrmjV5aV2pWbOX1td2TJu3ItHev5yM3nK9qd+5JXnRWieapXlTayzF2yS1thK8+ExhH3IAOSTPGbR40YKuY8gJ5BRyBjlPqHNpXvqcqN5sLyFXkGvIDeSWzK3Qfs7t2tsJ95r2O8g95AHyCHnyPB8b2htTX3P/GfICeYW8Qd6nf2d2TWLON4le/NlVv5B7c2leV44s9dMwr/67t6vPVbm9zVx2zWaXt/KcZ92ROWcN0Ty3uPH/N8fRWpF9X71L9c43Vuqm+zToTV2vQ/fvvMVJrRq8NjeuZ/TSda3F6+rfvjN6R+/olev9ATxdk1o=
+  </data>
+ </layer>
+ <layer id="5" name="Background2" width="60" height="60">
+  <data encoding="base64" compression="zlib">
+   eJzt2cENgzAMBdBc6CA9cOgiZY92/xnKBFXAgLDz3g2Jy8dfshJaG8vz8f95FKPmBoCrvOza3eZE3+7oOWfKHjFKTgAAAADqc9eV13tqbZn63q0w58+a9duZl5i7/iM6o8d3zQpX2rJPKrBP6ol0OGP/Ix3Wf4CcMu6riN595Ty3X4V7omoifa4+z+r52OYHpKoKNw==
   </data>
  </layer>
  <layer id="2" name="Collision" width="60" height="60">
@@ -18,11 +31,11 @@
    <property name="blocked" type="bool" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmMlOFEEch7tnBnCNhsQFGNCTG3rBqGz6Dhq3Z3BFJXowEnFfYAYFz/oMmHDXk4BP4HZyS5STK5z8OplJymJ6pteqoahf8iXT3VOV/1dVXdM9jlM9lzM1vhAhUzAXoN8r2f+Pr2Yrfy/JxPW9QfubcAtul/oy2fcO7e/CPbgfw/dMNhnfwUx1hmP6PqD9QxiB0RTnt4tre0OOxw/XcX7CL/gNf+AvzMOCG66vcgp4FWEMHkm++6hvf5UaPd8u4XrS6zlHDQ3QCE2wAlbCKlgdcZ4f024cJuCJ5HuY+o9UcRiXrk0m4HuNeRsqzd0GatgIm2AztEArtEE+wX267HuW+s8p2IPEFHAtlny3UcN22AE7YRd0wm7Yk4KvjjzF9VnJ9wA1dEMP9EIf9MNBOKTA9xXnpmEGZuG1pjEJGm/YMhWQl6yf70fOfYLP8AW+1rnvWp/z66Rj3/XMwLiQgSzkFN/bYRPXN49fO3TAFthaB77nWbQD7uLPXuL6duPXA73QB/2S7wvavFS8xq/jN+wu/uwlru9R/I7BcTgBJyXf97T5oNg3Bw0CjcK1FmitQJvUh5/vAH4X4CJcgkHJd542C0K7Ws9nSWQ9rBFojtCHn+8ItY9CAYowVsOl1vNZEknTN2xUPJ/loV2gI0IfOp+vdKRefKfZa2dgNuK7X9CIvkH2nLDvtUHzBs+38E6hr4o9p1Ke4/gNvsMcTKboLPrqeCdUnbTv3yj/7djYRE29/B6pivUNllPsQaeX4D6kc36nNOH5pkk58vkJRw9pj6fffOpI2Xe5xPqaHetrdqyv2bG+Zsf6mh3ra3asr9mxvmbH+pod62tjs3Sz3Naz9TU71tfs6PT9B3Us+I8=
+   eJztmMlu00AAhh3bCbtASCxt08KJnUsR0CXwDiC2Z2AtUMEBgSj70iaFwhmeoYXe4URbJMSV7QQUqc0JCrQnPkuJNHXjxLE9Y5POL31SYmcm881MJp4xjOq5ZNb4QICMQtFHvZet+e+vWJU/F2XC+t6g/E24BbdLdTWy7x3K34V7cD+E72krGt9eszp9IX0fUP4h9MOAxPFt596eOvvjZ8owfsEM/IY/8BdmYS5VX13l5PEqwCA8cvnupX37qrTR8W0X7kc9n23akIYMLIGlsAyWw4qA4/yYckPwBJ66fA/R/sNVHIZc94Yj8L3KuF0rjd062rAeNsBGaIJmaIFshOt02fcM7T+rYA0Sk8e1UPLdQhu2wjbYDjtgJ+yC3RJ848gzXJ+XfPfThg7ohC7ohhwcgIMKfN9wbQzGYQLextQnfuN0m1kB95T18v3KtW/wHSbhR8J9V3lcX+167zmf6ZgUmGCBrfi3XW/C+mbxa4U22ASbE+B7jknbk1r42klY3w78OqELuiHn8n1FmdeK5/h1/PpSC187Cet7BL+jcAyOwwmX72fKfFHsa0NaICPca4LmCrS46vDy7cHvPFyAi9Dr8p2lzJxQrtbzWRRZAysF1gaow8u3n7YPQB4KMFjDpdbzWRSR6VtvVDyfZaFVoC1AHXE+X8WRpPiOsdaOw0TAvZ/fiL5+1px697V+8wHPj/BJoa+KNadSRnCcgmkowrBEZ9E3jj2h6syYcn+/Qc52dHSCJin/R6qiff3lJGvQqf9wHYpzfEdjomjKpRz39RE2tC8U89KW359e4/nODjozgue9Pb9NKiP6TqblfY9Yd1J8rYxh5CQ5W8LBT1J8VUX7qov2lZ/F5Oush9pXXbSv/GhfddG+8qN91UX7yo/2VRftKz/aV13i8I0z2ld+kjKfF9N5rLMvFc9Mo04jn8c6fVftHLvRfGslTt8pvntaMcUYff8BiE877A==
   </data>
  </layer>
  <objectgroup id="3" name="Object">
-  <object id="2" name="Player" gid="193" x="63.2433" y="188.345" width="33.3333" height="32"/>
+  <object id="2" name="Player" gid="193" x="95.91" y="201.012" width="33.3333" height="32"/>
   <object id="4" name="Slime" gid="253" x="347.333" y="470" width="64" height="64"/>
   <object id="5" name="Slime" gid="261" x="322" y="77.3333" width="64" height="64"/>
   <object id="6" name="Slime" gid="253" x="389.334" y="369.334" width="64" height="64"/>
@@ -46,5 +59,24 @@
   <object id="29" name="Skeleton" gid="277" x="654.667" y="185.333" width="32" height="32"/>
   <object id="30" name="Skeleton" gid="277" x="693.333" y="181.333" width="32" height="32"/>
   <object id="31" name="Skeleton" gid="277" x="900" y="213.333" width="32" height="32"/>
+  <object id="33" name="Skeleton" gid="277" x="225.333" y="546.667" width="32" height="32"/>
+  <object id="34" name="Skeleton" gid="277" x="193.333" y="580" width="32" height="32"/>
+  <object id="35" name="Skeleton" gid="277" x="170.667" y="630.667" width="32" height="32"/>
+  <object id="36" name="Skeleton" gid="277" x="184" y="940" width="32" height="32"/>
+  <object id="37" name="Skeleton" gid="277" x="150.667" y="898.667" width="32" height="32"/>
+  <object id="38" name="Skeleton" gid="277" x="134.667" y="861.333" width="32" height="32"/>
+  <object id="39" name="Slime" gid="253" x="253.333" y="572" width="64" height="64"/>
+  <object id="40" name="Slime" gid="253" x="216" y="626.667" width="64" height="64"/>
+  <object id="41" name="Slime" gid="253" x="186.667" y="676" width="64" height="64"/>
+  <object id="42" name="Slime" gid="253" x="180" y="864" width="64" height="64"/>
+  <object id="43" name="Slime" gid="253" x="198.666" y="897.334" width="64" height="64"/>
+  <object id="44" name="Slime" gid="253" x="226.667" y="942.667" width="64" height="64"/>
+  <object id="47" name="King_Slime" gid="998" x="25.3333" y="732" width="64" height="64"/>
+  <object id="54" name="Potion" gid="1568" x="641.333" y="680" width="16" height="16"/>
+  <object id="55" name="Potion" gid="1568" x="734.667" y="677.333" width="16" height="16"/>
+  <object id="56" name="Potion" gid="1568" x="734.667" y="770.667" width="16" height="16"/>
+  <object id="57" name="Potion" gid="1568" x="640" y="769.333" width="16" height="16"/>
+  <object id="58" name="Potion" gid="1568" x="641.333" y="36" width="16" height="16"/>
+  <object id="61" name="Sword" gid="1569" x="690.667" y="702.667" width="16" height="16"/>
  </objectgroup>
 </map>

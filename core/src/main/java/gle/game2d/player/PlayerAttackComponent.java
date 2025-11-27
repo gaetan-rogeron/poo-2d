@@ -2,7 +2,7 @@ package gle.game2d.player;
 
 /** Gère le système d'attaque du joueur. Single Responsibility Principle: cette classe s'occupe uniquement des attaques. */
 public class PlayerAttackComponent {
-    private final int damage;
+    private int damage; // Non-final pour permettre les upgrades
     private final float range;
     private final float duration;
     private final float cooldownTime;
@@ -84,6 +84,13 @@ public class PlayerAttackComponent {
 
     public int getDamage() {
         return damage;
+    }
+
+    public void setDamage(int damage) {
+        if (damage < 0) {
+            throw new IllegalArgumentException("Damage cannot be negative");
+        }
+        this.damage = damage;
     }
 
     public float getRange() {

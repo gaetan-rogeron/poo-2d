@@ -17,6 +17,7 @@ import gle.game2d.Main;
 import gle.game2d.zone.*;
 import gle.game2d.collision.CollisionMap;
 import gle.game2d.enemy.EnemyManager;
+import gle.game2d.object.ObjectManager;
 import gle.game2d.player.Player;
 
 /** Écran principal du jeu. Gère le rendu de la carte, du joueur, des ennemis et de l'interface utilisateur. Implémente IZoneObserver pour réagir aux changements de zones. */
@@ -40,6 +41,7 @@ public class FirstScreen implements Screen, IZoneObserver {
     //Entités du jeu
     private Player player;
     private EnemyManager enemyManager;
+    private ObjectManager objectManager;
     private CollisionMap collisionMap;
 
     //Interface utilisateur
@@ -68,8 +70,9 @@ public class FirstScreen implements Screen, IZoneObserver {
         initializeCollisions();
         initializeZoneSystem();
         initializeCamera();
-        initializePlayer();
         initializeEnemies();
+        initializeObjects();
+        initializePlayer();
         initializeUI();
 
         System.out.println("FirstScreen initialisé");
@@ -159,7 +162,24 @@ public class FirstScreen implements Screen, IZoneObserver {
     /** Initialise les ennemis et les charge depuis la carte. */
     private void initializeEnemies() {
         enemyManager = new EnemyManager(collisionMap);
+
+        // Configurer les zones de l'EnemyManager (doit correspondre au ZoneManager)
+        enemyManager.setZoneConfiguration(worldW, worldH, 2, 2);
+
+        // Charger les ennemis depuis la carte
         enemyManager.loadEnemiesFromMap(map);
+
+        // Enregistrer l'EnemyManager comme observateur des zones
+        zoneManager.addObserver(enemyManager);
+
+        System.out.println("EnemyManager initialisé et enregistré comme observateur des zones");
+    }
+
+    /** Initialise les objets collectables et les charge depuis la carte. */
+    private void initializeObjects() {
+        objectManager = new ObjectManager();
+        objectManager.loadObjectsFromMap(map);
+        System.out.println("ObjectManager initialisé");
     }
 
     /** Initialise l'interface utilisateur. */
@@ -211,6 +231,7 @@ public class FirstScreen implements Screen, IZoneObserver {
     private void updateGameState(float delta) {
         player.update(delta);
         enemyManager.update(delta, player);
+        objectManager.update(delta, player);
         zoneManager.update(delta, player.getCenterX(), player.getCenterY(), camera);
         camera.update();
     }
@@ -236,10 +257,11 @@ public class FirstScreen implements Screen, IZoneObserver {
         renderer.render();
     }
 
-    /** Rend les entités du jeu (ennemis et joueur). */
+    /** Rend les entités du jeu (objets, ennemis et joueur). */
     private void renderEntities() {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        objectManager.draw(batch);  // Dessiner les objets en premier (derrière)
         enemyManager.draw(batch);
         player.draw(batch);
         batch.end();
@@ -301,6 +323,7 @@ public class FirstScreen implements Screen, IZoneObserver {
         if (batch != null) batch.dispose();
         if (player != null) player.dispose();
         if (enemyManager != null) enemyManager.dispose();
+        if (objectManager != null) objectManager.dispose();
         if (healthBar != null) healthBar.dispose();
         if (shapeRenderer != null) shapeRenderer.dispose();
     }

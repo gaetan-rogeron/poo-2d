@@ -212,6 +212,10 @@ public class Player {
         return attackComponent.getDamage();
     }
 
+    public void setAttackDamage(int damage) {
+        attackComponent.setDamage(damage);
+    }
+
     public void dispose() {
         animationComponent.dispose();
     }

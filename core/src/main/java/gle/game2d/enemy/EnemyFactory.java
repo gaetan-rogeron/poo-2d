@@ -11,7 +11,8 @@ class EnemyFactory {
     /** Énumération des types d'ennemis disponibles. */
     public enum EnemyType {
         SLIME,
-        SKELETON
+        SKELETON,
+        KING_SLIME
     }
 
     /** Crée un ennemi selon son type. Factory Method Pattern. */
@@ -26,6 +27,8 @@ class EnemyFactory {
                 return createSlime(x, y, collisionMap);
             case SKELETON:
                 return createSkeleton(x, y, collisionMap);
+            case KING_SLIME:
+                return createKingSlime(x, y, collisionMap);
             default:
                 throw new IllegalArgumentException("Type d'ennemi inconnu: " + type);
         }
@@ -42,6 +45,8 @@ class EnemyFactory {
             return createSlime(x, y, collisionMap);
         } else if (enemyType.equals("Skeleton")) {
             return createSkeleton(x, y, collisionMap);
+        } else if (enemyType.equals("KingSlime")) {
+            return createKingSlime(x, y, collisionMap);
         }
 
         throw new IllegalArgumentException("Type d'ennemi inconnu: " + enemyType);
@@ -73,5 +78,20 @@ class EnemyFactory {
         IEnemyBehavior behavior = new AttackOnProximityBehavior(40f, 1.5f);
 
         return new SkeletonEnemy(x, y, stats, behavior, collisionMap);
+    }
+
+    /** Crée un King Slime (boss). */
+    private static IEnemy createKingSlime(float x, float y, CollisionMap collisionMap) {
+        EnemyStats stats = new EnemyStats.Builder()
+            .withDimensions(64, 64)
+            .withSpeed(25f)
+            .withHealth(300)
+            .withDamage(10)
+            .build();
+
+        // Comportement d'attaque avec une portée plus grande
+        IEnemyBehavior behavior = new AttackOnProximityBehavior(50f, 2.0f);
+
+        return new KingSlimeEnemy(x, y, stats, behavior, collisionMap);
     }
 }

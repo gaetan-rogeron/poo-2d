@@ -82,7 +82,26 @@
         "C:/Users/gaeta/Downloads/map2/tilset_player2.tsx": {
             "scaleInDock": 1
         },
+        "Cow.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Fences.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Halloween.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "King_Slime.tsx": {
+            "dynamicWrapping": false
+        },
+        "Oak_Tree.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Oak_Tree_Small.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -105,6 +124,12 @@
             "scaleInEditor": 1
         },
         "Slime_Green.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Slime_King.tsx": {
+            "dynamicWrapping": true,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -127,10 +152,10 @@
                 3
             ],
             "scale": 0.75,
-            "selectedLayer": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 383.33333333333326,
-                "y": 542.6666666666665
+                "x": 539.3333333333333,
+                "y": 450.6666666666666
             }
         },
         "tileset.tsx": {
@@ -138,6 +163,7 @@
             "scaleInEditor": 2
         }
     },
+    "frame.defaultDuration": 200,
     "last.externalTilesetPath": "C:/Users/gaeta/Documents/poo-2d/assets/maps",
     "last.imagePath": "C:/Users/gaeta/Documents/poo-2d/assets/maps",
     "map.lastUsedFormat": "tmx",
@@ -151,30 +177,33 @@
         "Skeleton.tsx",
         "Halloween.tsx",
         "Tiles.tsx",
-        "Village.tsx"
+        "Village.tsx",
+        "Fences.tsx",
+        "Oak_Tree_Small.tsx",
+        "Oak_Tree.tsx"
     ],
     "project": "map-project.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "Cow.tsx",
+        "Slime_King.tsx",
+        "Oak_Tree.tsx",
+        "Oak_Tree_Small.tsx",
+        "Fences.tsx",
         "Village.tsx",
         "Tiles.tsx",
         "Halloween.tsx",
         "Skeleton.tsx",
         "Slime_Green.tsx",
         "Player.tsx",
-        "map.tmx",
-        "C:/Users/gaeta/Downloads/map2/map_poo.tmx",
-        "Tiled.tsx",
-        "Player32.tsx",
-        "Outdoor decoration.tsx",
-        "tileset.tsx"
+        "map.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.margin": 0,
     "tileset.spacing": 0,
     "tileset.tileSize": {
-        "height": 16,
-        "width": 16
+        "height": 32,
+        "width": 32
     },
     "tileset.type": 0
 }
