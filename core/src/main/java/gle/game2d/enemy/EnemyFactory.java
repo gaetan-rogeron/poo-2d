@@ -61,7 +61,7 @@ class EnemyFactory {
             .withDamage(5)
             .build();
 
-        IEnemyBehavior behavior = new ChasePlayerBehavior();
+        IEnemyBehavior behavior = new AttackOnProximityBehavior(30f, 2.0f);
 
         return new SlimeEnemy(x, y, stats, behavior, collisionMap);
     }
