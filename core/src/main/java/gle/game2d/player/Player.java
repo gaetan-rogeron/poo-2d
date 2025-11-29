@@ -10,8 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 /** Représente le personnage joueur dans le jeu. Utilise le patron Strategy pour les comportements et Composite pour les composants. */
 public class Player {
     //Constantes
-    private static final int PLAYER_WIDTH = 32;
-    private static final int PLAYER_HEIGHT = 32;
+    private static final int PLAYER_WIDTH = 24;
+    private static final int PLAYER_HEIGHT = 24;
     private static final float PLAYER_SPEED = 100f;
 
     //Composants (Composition)
@@ -34,7 +34,7 @@ public class Player {
         this.movementComponent = new PlayerMovementComponent(
             PLAYER_SPEED, PLAYER_WIDTH, PLAYER_HEIGHT
         );
-        this.attackComponent = new PlayerAttackComponent(10, 20f, 0.4f, 0.5f);
+        this.attackComponent = new PlayerAttackComponent(10, 5f, 0.4f, 0.5f);
         this.animationComponent = new PlayerAnimationComponent();
         this.currentDirection = PlayerDirection.createDown();
         this.stateTime = 0f;
