@@ -25,6 +25,9 @@ public class EnemyManager implements IZoneObserver {
     private final CollisionMap collisionMap;
     private final EnemyFactory factory;
 
+    private KingSlimeEnemy kingSlime; // Stocke le boss lui meme (s’il existe)
+    private IBossDeathListener bossDeathListener; // sert toujours a prevenir la mort du boss
+
     // Configuration des zones (doit correspondre au ZoneManager)
     private float zoneWidth;
     private float zoneHeight;
@@ -42,6 +45,15 @@ public class EnemyManager implements IZoneObserver {
         this.enemiesByZone = new HashMap<>();
         this.activatedZones = new HashSet<>();
         this.factory = new EnemyFactory();
+    }
+
+    public void setBossDeathListener(IBossDeathListener listener) {
+        this.bossDeathListener = listener;
+
+        // Si le boss existe deja, lui donner listener
+        if (kingSlime != null) {
+            kingSlime.setBossDeathListener(listener);
+        }
     }
 
     /** Configure les dimensions des zones (doit correspondre au ZoneManager). */

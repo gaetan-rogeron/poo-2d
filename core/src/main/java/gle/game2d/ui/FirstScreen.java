@@ -19,9 +19,10 @@ import gle.game2d.collision.CollisionMap;
 import gle.game2d.enemy.EnemyManager;
 import gle.game2d.object.ObjectManager;
 import gle.game2d.player.Player;
+import gle.game2d.enemy.IBossDeathListener;
 
 /** Écran principal du jeu. Gère le rendu de la carte, du joueur, des ennemis et de l'interface utilisateur. Implémente IZoneObserver pour réagir aux changements de zones. */
-public class FirstScreen implements Screen, IZoneObserver {
+public class FirstScreen implements Screen, IZoneObserver, IBossDeathListener {
     private final Main game;
 
     //Caméra et viewport
@@ -57,6 +58,9 @@ public class FirstScreen implements Screen, IZoneObserver {
         new EaseOutTransition(),
         new EaseInOutTransition()
     };
+
+    // Pour le boss/jeu (comme vous voulez)
+    private boolean gameEnded = false; // affirme si le jeu est finito
 
     /** Constructeur de l'écran principal. */
     public FirstScreen(Main game) {
@@ -172,7 +176,16 @@ public class FirstScreen implements Screen, IZoneObserver {
         // Enregistrer l'EnemyManager comme observateur des zones
         zoneManager.addObserver(enemyManager);
 
+        enemyManager.setBossDeathListener(this); // Dit a EnemyManager si le boss est mort
+
         System.out.println("EnemyManager initialisé et enregistré comme observateur des zones");
+    }
+
+    @Override
+    public void onBossDeath() { // censé faire finir le jeu
+        gameEnded = true;
+        System.out.println("=== FIN DU JEU ===");
+        System.out.println("Le boss a été vaincu !");
     }
 
     /** Initialise les objets collectables et les charge depuis la carte. */
