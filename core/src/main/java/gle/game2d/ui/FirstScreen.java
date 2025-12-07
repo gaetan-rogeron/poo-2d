@@ -178,7 +178,7 @@ public class FirstScreen implements Screen, IZoneObserver, IBossDeathListener {
 
         enemyManager.setBossDeathListener(this); // Dit a EnemyManager si le boss est mort
 
-        System.out.println("EnemyManager initialisé et enregistré comme observateur des zones");
+        System.out.println("EnemyManager initialisé");
     }
 
     @Override
@@ -204,9 +204,11 @@ public class FirstScreen implements Screen, IZoneObserver, IBossDeathListener {
     /** Rendu principal du jeu. Appelé à chaque frame. */
     @Override
     public void render(float delta) {
+        if (!gameEnded){            //Oublie dans le code, voici solution pour arreter le jeu, mort boss marche enfin
         handleInput();
         updateGameState(delta);
         renderScene();
+        }
     }
 
     /** Gère les entrées clavier pour les options de débogage. */

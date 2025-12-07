@@ -152,6 +152,15 @@ public class EnemyManager implements IZoneObserver {
     public void spawnEnemy(EnemyFactory.EnemyType type, float x, float y) {
         IEnemy enemy = EnemyFactory.createEnemy(type, x, y, collisionMap);
         enemies.add(enemy);
+
+        if (type == EnemyFactory.EnemyType.KING_SLIME && enemy instanceof KingSlimeEnemy) {
+            kingSlime = (KingSlimeEnemy) enemy;
+            if (bossDeathListener != null) {
+                kingSlime.setBossDeathListener(bossDeathListener);
+            }
+            System.out.println(" BOSS KING SLIME SPAWNED! Listener assigné: " + (bossDeathListener != null)); // j'avais oublié ca, on assigne le listener
+        }
+
         System.out.println(type + " spawned at: (" + x + ", " + y + ")");
     }
 
