@@ -4,15 +4,14 @@ package gle.game2d.player;
 public class PlayerHealthComponent {
     private static final float INVINCIBILITY_DURATION = 1.0f;
     private static final int BLINK_FREQUENCY = 10;
-
     private int maxHealth;
     private int currentHealth;
     private boolean invincible;
     private float invincibilityTimer;
 
     /** Mort du joueur : */
-    private PlayerDeathListener deathListener;
-    private boolean deathTriggered;
+    private PlayerDeathListener deathListener; // Ajout du listener
+    private final boolean deathTriggered;
 
     /** Constructeur. */
     public PlayerHealthComponent(int maxHealth) {
@@ -24,6 +23,11 @@ public class PlayerHealthComponent {
         this.deathListener = null;
     }
 
+    /** Setter Listener */
+    public void setPlayerdeathListener (PlayerDeathListener listener) {
+        this.deathListener = listener;
+    }
+
     /** Met à jour l'état de santé (invincibilité). */
     public void update(float deltaTime) {
         if (invincible) {
@@ -32,11 +36,6 @@ public class PlayerHealthComponent {
                 invincible = false;
             }
         }
-    }
-
-    /** Permet d'assigner un listener appelé quand le jouer meurt (HP = 0) */
-    public void setPlayerdeathListener (PlayerDeathListener listener) {
-        this.deathListener = listener;
     }
 
     /** Inflige des dégâts au joueur. */
@@ -76,7 +75,14 @@ public class PlayerHealthComponent {
 
     /** Appelé quand le joueur meurt. */
     private void onDeath() {
-        System.out.println("Player died!");
+        System.out.println("=======================================");
+        System.out.println("               GAME OVER               ");
+        System.out.println("          Le joueur est mort           ");
+        System.out.println("=======================================");
+
+        if (deathListener != null) {
+            deathListener.onPlayerDeath();
+        }
     }
 
     /** Détermine si le joueur doit clignoter (pendant l'invincibilité). */
@@ -118,8 +124,13 @@ public class PlayerHealthComponent {
         }
     }
 
+    public void setDeathListener(PlayerDeathListener deathListener) {
+    }
+
     /** Calcule le pourcentage de vie. */
     public float getHealthPercentage() {
         return (float) currentHealth / maxHealth;
     }
+
+
 }

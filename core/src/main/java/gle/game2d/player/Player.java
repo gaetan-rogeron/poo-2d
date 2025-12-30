@@ -28,9 +28,10 @@ public class Player {
     private final CollisionMap collisionMap;
 
     /** Constructeur du joueur. */
-    public Player(CollisionMap collisionMap) {
+    public Player(CollisionMap collisionMap, PlayerDeathListener deathListener) {
         this.collisionMap = collisionMap;
         this.healthComponent = new PlayerHealthComponent(100);
+        this.healthComponent.setDeathListener(deathListener); // Enregistrer le listener
         this.movementComponent = new PlayerMovementComponent(
             PLAYER_SPEED, PLAYER_WIDTH, PLAYER_HEIGHT
         );
@@ -38,6 +39,11 @@ public class Player {
         this.animationComponent = new PlayerAnimationComponent();
         this.currentDirection = PlayerDirection.createDown();
         this.stateTime = 0f;
+    }
+
+    /** Constructeur alternatif pour compatibilité */
+    public Player(CollisionMap collisionMap) {
+        this(collisionMap, null);
     }
 
     /** Met à jour l'état du joueur. Applique le patron Template Method. */

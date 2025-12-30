@@ -19,6 +19,7 @@ import gle.game2d.collision.CollisionMap;
 import gle.game2d.enemy.EnemyManager;
 import gle.game2d.object.ObjectManager;
 import gle.game2d.player.Player;
+import gle.game2d.player.PlayerDeathListener;
 
 /** Écran principal du jeu. Gère le rendu de la carte, du joueur, des ennemis et de l'interface utilisateur. Implémente IZoneObserver pour réagir aux changements de zones. */
 public class FirstScreen implements Screen, IZoneObserver {
@@ -121,7 +122,7 @@ public class FirstScreen implements Screen, IZoneObserver {
     /** Initialise le joueur et charge sa position depuis la carte. */
     private void initializePlayer() {
         batch = new SpriteBatch();
-        player = new Player(collisionMap);
+        player = new Player(collisionMap, (PlayerDeathListener) this);
 
         float playerStartX = loadPlayerSpawnPosition();
         float playerStartY = playerStartX == 0 ? 0 : loadPlayerSpawnY();
@@ -136,6 +137,7 @@ public class FirstScreen implements Screen, IZoneObserver {
         camera.update();
 
         System.out.println("Joueur initialisé à la position: x=" + playerStartX + ", y=" + playerStartY);
+        System.out.println("✓ Player death listener enregistré");
     }
 
     /** Charge la position X du spawn du joueur depuis la carte. */
@@ -180,6 +182,14 @@ public class FirstScreen implements Screen, IZoneObserver {
         objectManager = new ObjectManager();
         objectManager.loadObjectsFromMap(map);
         System.out.println("ObjectManager initialisé");
+    }
+
+    //** Implémentation de IPlayerDeathListener */
+    @Override
+    public void onPlayerDeath() {
+        boolean gameEnded = true;
+        System.out.println("=== GAME OVER ===");
+        System.out.println("Le joueur est mort !");
     }
 
     /** Initialise l'interface utilisateur. */
