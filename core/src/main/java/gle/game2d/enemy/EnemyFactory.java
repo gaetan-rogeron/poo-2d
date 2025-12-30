@@ -8,48 +8,37 @@ import gle.game2d.collision.CollisionMap;
 /** Factory pour créer des ennemis. Applique le patron Factory Method. */
 class EnemyFactory {
 
-    /** Énumération des types d'ennemis disponibles. */
+    /** Enum orientée objet : énumération des types d'ennemis disponibles */
     public enum EnemyType {
-        SLIME,
-        SKELETON,
-        KING_SLIME
+
+        SLIME {
+            @Override
+            public IEnemy create(float x, float y, CollisionMap map) {
+                return EnemyFactory.createSlime(x, y, map);
+            }
+        },
+        SKELETON {
+            @Override
+            public IEnemy create(float x, float y, CollisionMap map) {
+                return EnemyFactory.createSkeleton(x, y, map);
+            }
+        },
+        KING_SLIME {
+            @Override
+            public IEnemy create(float x, float y, CollisionMap map) {
+                return EnemyFactory.createKingSlime(x, y, map);
+            }
+        };
+
+        public abstract IEnemy create(float x, float y, CollisionMap map);
     }
 
-    /** Crée un ennemi selon son type. Factory Method Pattern. */
-    public static IEnemy createEnemy(EnemyType type, float x, float y,
-                                     CollisionMap collisionMap) {
+    /** Crée un ennemi selon son type. */
+    public static IEnemy createEnemy(EnemyType type, float x, float y, CollisionMap map) {
         if (type == null) {
             throw new IllegalArgumentException("Type d'ennemi ne peut pas être null");
         }
-
-        switch (type) {
-            case SLIME:
-                return createSlime(x, y, collisionMap);
-            case SKELETON:
-                return createSkeleton(x, y, collisionMap);
-            case KING_SLIME:
-                return createKingSlime(x, y, collisionMap);
-            default:
-                throw new IllegalArgumentException("Type d'ennemi inconnu: " + type);
-        }
-    }
-
-    /** Crée un ennemi selon son type (version String pour compatibilité). Factory Method Pattern. */
-    public static IEnemy createEnemy(String enemyType, float x, float y,
-                                     CollisionMap collisionMap) {
-        if (enemyType == null || enemyType.isEmpty()) {
-            throw new IllegalArgumentException("Type d'ennemi ne peut pas être vide");
-        }
-
-        if (enemyType.equals("Slime")) {
-            return createSlime(x, y, collisionMap);
-        } else if (enemyType.equals("Skeleton")) {
-            return createSkeleton(x, y, collisionMap);
-        } else if (enemyType.equals("KingSlime")) {
-            return createKingSlime(x, y, collisionMap);
-        }
-
-        throw new IllegalArgumentException("Type d'ennemi inconnu: " + enemyType);
+        return type.create(x, y, map);
     }
 
     /** Crée un Slime. */
@@ -89,7 +78,6 @@ class EnemyFactory {
             .withDamage(10)
             .build();
 
-        // Comportement d'attaque avec une portée plus grande
         IEnemyBehavior behavior = new AttackOnProximityBehavior(50f, 2.0f);
 
         return new KingSlimeEnemy(x, y, stats, behavior, collisionMap);
