@@ -1,4 +1,5 @@
 package gle.game2d.player;
 
-public class PlayerDeathListener {
+public interface PlayerDeathListener {
+    void onPlayerDeath();
 }

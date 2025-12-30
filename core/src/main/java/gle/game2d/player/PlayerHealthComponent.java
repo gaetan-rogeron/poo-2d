@@ -10,12 +10,18 @@ public class PlayerHealthComponent {
     private boolean invincible;
     private float invincibilityTimer;
 
+    /** Mort du joueur : */
+    private PlayerDeathListener deathListener;
+    private boolean deathTriggered;
+
     /** Constructeur. */
     public PlayerHealthComponent(int maxHealth) {
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
         this.invincible = false;
         this.invincibilityTimer = 0f;
+        this.deathTriggered = false;
+        this.deathListener = null;
     }
 
     /** Met à jour l'état de santé (invincibilité). */
@@ -26,6 +32,11 @@ public class PlayerHealthComponent {
                 invincible = false;
             }
         }
+    }
+
+    /** Permet d'assigner un listener appelé quand le jouer meurt (HP = 0) */
+    public void setPlayerdeathListener (PlayerDeathListener listener) {
+        this.deathListener = listener;
     }
 
     /** Inflige des dégâts au joueur. */
