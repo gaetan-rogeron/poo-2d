@@ -8,5 +8,5 @@ import gle.game2d.player.Player;
  */
 public interface IEnemyBehavior {
     /** Exécute le comportement de l'ennemi. */
-    void execute(EnemyBase enemy, float deltaTime, Player player);
+    public void execute(EnemyBase enemy, float deltaTime, Player player);
 }

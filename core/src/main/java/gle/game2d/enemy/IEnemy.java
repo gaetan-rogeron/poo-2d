@@ -8,16 +8,16 @@ import gle.game2d.player.Player;
 /** Interface définissant le comportement d'un ennemi. Applique le principe Dependency Inversion (dépendance sur abstraction). */
 public interface IEnemy {
     /** Met à jour l'état de l'ennemi. */
-    void update(float deltaTime, Player player);
+    public void update(float deltaTime, Player player);
 
     /** Dessine l'ennemi à l'écran. */
-    void draw(SpriteBatch batch);
+    public void draw(SpriteBatch batch);
 
     /** Dessine la barre de vie de l'ennemi. */
-    void drawHealthBar(ShapeRenderer shapeRenderer);
+    public void drawHealthBar(ShapeRenderer shapeRenderer);
 
     /** Inflige des dégâts à l'ennemi. */
-    void takeDamage(int damage);
+    public void takeDamage(int damage);
 
     /** Vérifie si l'ennemi est vivant. */
     boolean isAlive();
@@ -29,5 +29,5 @@ public interface IEnemy {
     int getDamage();
 
     /** Libère les ressources utilisées par l'ennemi. */
-    void dispose();
+    public void dispose();
 }

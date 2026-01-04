@@ -4,7 +4,7 @@ package gle.game2d.enemy;
 // On va l'utiliser pour arreter le jeu
 
 public interface IBossDeathListener {
-        void onBossDeath();
+        public void onBossDeath();
 }
 
 
