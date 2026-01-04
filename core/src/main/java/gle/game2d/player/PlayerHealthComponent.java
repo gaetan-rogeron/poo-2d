@@ -20,7 +20,7 @@ public class PlayerHealthComponent {
     }
 
     public void setDeathListener(IPlayerDeathListener listener){ //le setter se fait appellé a la mort du perso
-        this.deathListener = listener;
+        this.deathListener = listener; // j'avais mis deathlistener = deathlistner : FAUX, deathListner = listener : Vrai
     }
 
     /** Met à jour l'état de santé (invincibilité). */
