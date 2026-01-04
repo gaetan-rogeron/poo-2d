@@ -126,7 +126,8 @@ public class FirstScreen implements Screen, IZoneObserver, IBossDeathListener, I
     /** Initialise le joueur et charge sa position depuis la carte. */
     private void initializePlayer() {
         batch = new SpriteBatch();
-        player = new Player(collisionMap);
+        player = new Player(collisionMap, this); // notifie lorsque le joueur meurt et fige le jeu (j'avais oublié de mettre ca d'ou le fait que ca marchait pas)
+
 
         float playerStartX = loadPlayerSpawnPosition();
         float playerStartY = playerStartX == 0 ? 0 : loadPlayerSpawnY();
