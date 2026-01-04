@@ -28,9 +28,12 @@ public class Player {
     private final CollisionMap collisionMap;
 
     /** Constructeur du joueur. */
-    public Player(CollisionMap collisionMap) {
+    public Player(CollisionMap collisionMap, IPlayerDeathListener deathListener) {
         this.collisionMap = collisionMap;
         this.healthComponent = new PlayerHealthComponent(100);
+
+        this.healthComponent.setDeathListener(deathListener); //Enregistrement du listener pour être averti de la mort du joueur
+
         this.movementComponent = new PlayerMovementComponent(
             PLAYER_SPEED, PLAYER_WIDTH, PLAYER_HEIGHT
         );
@@ -38,6 +41,10 @@ public class Player {
         this.animationComponent = new PlayerAnimationComponent();
         this.currentDirection = PlayerDirection.createDown();
         this.stateTime = 0f;
+    }
+
+    public Player(CollisionMap collisionMap){ //Permet de reagir à la mort du joueur sans coupler cette classe au reste du jeu
+        this(collisionMap, null); // lisez : https://stackoverflow.com/questions/226977/what-is-loose-coupling-please-provide-examples pour comprendre un peu mieux
     }
 
     /** Met à jour l'état du joueur. Applique le patron Template Method. */

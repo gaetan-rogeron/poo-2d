@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import gle.game2d.Main;
+import gle.game2d.player.IPlayerDeathListener;
 import gle.game2d.zone.*;
 import gle.game2d.collision.CollisionMap;
 import gle.game2d.enemy.EnemyManager;
@@ -22,7 +23,7 @@ import gle.game2d.player.Player;
 import gle.game2d.enemy.IBossDeathListener;
 
 /** Écran principal du jeu. Gère le rendu de la carte, du joueur, des ennemis et de l'interface utilisateur. Implémente IZoneObserver pour réagir aux changements de zones. */
-public class FirstScreen implements Screen, IZoneObserver, IBossDeathListener {
+public class FirstScreen implements Screen, IZoneObserver, IBossDeathListener, IPlayerDeathListener {
     private final Main game;
 
     //Caméra et viewport
@@ -182,7 +183,14 @@ public class FirstScreen implements Screen, IZoneObserver, IBossDeathListener {
     }
 
     @Override
-    public void onBossDeath() { // censé faire finir le jeu
+    public void onPlayerDeath() { // Implémentation du listener de mort du joueur. Pv = 0 : atteint zéro écran de reagit à l'événement (Game Over)
+        gameEnded = true;
+        System.out.println("=== FIN DU JEU ===");
+        System.out.println("Le player est mort !");
+    }
+
+    @Override
+    public void onBossDeath() { // but : faire finir le jeu
         gameEnded = true;
         System.out.println("=== FIN DU JEU ===");
         System.out.println("Le boss a été vaincu !");
@@ -207,8 +215,12 @@ public class FirstScreen implements Screen, IZoneObserver, IBossDeathListener {
         if (!gameEnded){            //Oublie dans le code, voici solution pour arreter le jeu, mort boss marche enfin
         handleInput();
         updateGameState(delta);
-        renderScene();
         }
+        clearScreen();
+        renderMap();
+        renderEntities();
+        renderHealthBars();
+        renderUI();
     }
 
     /** Gère les entrées clavier pour les options de débogage. */

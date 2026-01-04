@@ -9,6 +9,7 @@ public class PlayerHealthComponent {
     private int currentHealth;
     private boolean invincible;
     private float invincibilityTimer;
+    private IPlayerDeathListener deathListener; //ca stock qui doit etre notifié
 
     /** Constructeur. */
     public PlayerHealthComponent(int maxHealth) {
@@ -16,6 +17,10 @@ public class PlayerHealthComponent {
         this.currentHealth = maxHealth;
         this.invincible = false;
         this.invincibilityTimer = 0f;
+    }
+
+    public void setDeathListener(IPlayerDeathListener listener){ //le setter se fait appellé a la mort du perso
+        this.deathListener = deathListener;
     }
 
     /** Met à jour l'état de santé (invincibilité). */
@@ -66,6 +71,10 @@ public class PlayerHealthComponent {
     /** Appelé quand le joueur meurt. */
     private void onDeath() {
         System.out.println("Player died!");
+
+        if (deathListener != null){ //quand le personnage meurt, onDeath est appelé
+            deathListener.onPlayerDeath();
+        }
     }
 
     /** Détermine si le joueur doit clignoter (pendant l'invincibilité). */
