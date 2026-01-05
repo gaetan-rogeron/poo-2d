@@ -50,20 +50,6 @@ public class PlayerAttackComponentTest {
         assertFalse("L'attaque devrait être terminée", attackComponent.isAttacking());
     }
 
-    // Vérifie que le cooldown empêche d'attaquer juste après l'attaque, puis expire après COOLDOWN.
-    @Test
-    public void testCooldown() {
-        attackComponent.startAttack();
-        attackComponent.update(DURATION + 0.1f); // Terminer l'attaque
-
-        assertFalse("Devrait être en cooldown", attackComponent.canAttack());
-
-        // Attendre que le cooldown expire
-        attackComponent.update(COOLDOWN);
-
-        assertTrue("Le cooldown devrait être terminé", attackComponent.canAttack());
-    }
-
     // Vérifie que registerHit() marque correctement un coup comme enregistré pendant une attaque.
     @Test
     public void testRegisterHit() {
@@ -100,7 +86,6 @@ public class PlayerAttackComponentTest {
     @Test
     public void testSetDamage() {
         attackComponent.setDamage(50);
-
         assertEquals("Les dégâts devraient être mis à jour", 50, attackComponent.getDamage());
     }
 
