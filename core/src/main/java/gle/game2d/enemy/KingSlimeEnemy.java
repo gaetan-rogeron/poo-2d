@@ -17,12 +17,18 @@ class KingSlimeEnemy extends EnemyBase {
     private static final int ANIMATION_FRAMES = 4;
     private static final float FRAME_DURATION = 0.15f;
 
+    private IBossDeathListener bossDeathListener;
+
     /**
      * Constructeur du King Slime.
      */
     public KingSlimeEnemy(float x, float y, EnemyStats stats, IEnemyBehavior behavior,
                           CollisionMap collisionMap) {
         super(x, y, stats, behavior, collisionMap);
+    }
+
+    public void setBossDeathListener(IBossDeathListener listener) { // setter pour prevenir la mort du boss
+        this.bossDeathListener = listener;
     }
 
     @Override
@@ -43,6 +49,10 @@ class KingSlimeEnemy extends EnemyBase {
     @Override
     protected void onDeath() {
         super.onDeath();
-        System.out.println("Le King Slime a été vaincu!");
+        System.out.println("   LE KING SLIME A ÉTÉ VAINCU !   ");
+
+        if (bossDeathListener != null) { // ca va donner l'info que le boss est mort
+            bossDeathListener.onBossDeath();
+        }
     }
 }

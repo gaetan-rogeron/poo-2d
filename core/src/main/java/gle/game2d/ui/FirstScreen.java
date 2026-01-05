@@ -14,15 +14,16 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import gle.game2d.Main;
+import gle.game2d.player.IPlayerDeathListener;
 import gle.game2d.zone.*;
 import gle.game2d.collision.CollisionMap;
 import gle.game2d.enemy.EnemyManager;
 import gle.game2d.object.ObjectManager;
 import gle.game2d.player.Player;
-import gle.game2d.player.PlayerDeathListener;
+import gle.game2d.enemy.IBossDeathListener;
 
 /** Écran principal du jeu. Gère le rendu de la carte, du joueur, des ennemis et de l'interface utilisateur. Implémente IZoneObserver pour réagir aux changements de zones. */
-public class FirstScreen implements Screen, IZoneObserver {
+public class FirstScreen implements Screen, IZoneObserver, IBossDeathListener, IPlayerDeathListener {
     private final Main game;
 
     //Caméra et viewport
@@ -58,6 +59,9 @@ public class FirstScreen implements Screen, IZoneObserver {
         new EaseOutTransition(),
         new EaseInOutTransition()
     };
+
+    // Pour le boss/jeu (comme vous voulez)
+    private boolean gameEnded = false; // affirme si le jeu est finito
 
     /** Constructeur de l'écran principal. */
     public FirstScreen(Main game) {
@@ -122,7 +126,8 @@ public class FirstScreen implements Screen, IZoneObserver {
     /** Initialise le joueur et charge sa position depuis la carte. */
     private void initializePlayer() {
         batch = new SpriteBatch();
-        player = new Player(collisionMap, (PlayerDeathListener) this);
+        player = new Player(collisionMap, this); // notifie lorsque le joueur meurt et fige le jeu (j'avais oublié de mettre ca d'ou le fait que ca marchait pas)
+
 
         float playerStartX = loadPlayerSpawnPosition();
         float playerStartY = playerStartX == 0 ? 0 : loadPlayerSpawnY();
@@ -137,7 +142,6 @@ public class FirstScreen implements Screen, IZoneObserver {
         camera.update();
 
         System.out.println("Joueur initialisé à la position: x=" + playerStartX + ", y=" + playerStartY);
-        System.out.println("✓ Player death listener enregistré");
     }
 
     /** Charge la position X du spawn du joueur depuis la carte. */
@@ -174,7 +178,23 @@ public class FirstScreen implements Screen, IZoneObserver {
         // Enregistrer l'EnemyManager comme observateur des zones
         zoneManager.addObserver(enemyManager);
 
-        System.out.println("EnemyManager initialisé et enregistré comme observateur des zones");
+        enemyManager.setBossDeathListener(this); // Dit a EnemyManager si le boss est mort
+
+        System.out.println("EnemyManager initialisé");
+    }
+
+    @Override
+    public void onPlayerDeath() { // Implémentation du listener de mort du joueur. Pv = 0 : atteint zéro écran de reagit à l'événement (Game Over)
+        gameEnded = true;
+        System.out.println("=== FIN DU JEU ===");
+        System.out.println("Le player est mort !");
+    }
+
+    @Override
+    public void onBossDeath() { // but : faire finir le jeu
+        gameEnded = true;
+        System.out.println("=== FIN DU JEU ===");
+        System.out.println("Le boss a été vaincu !");
     }
 
     /** Initialise les objets collectables et les charge depuis la carte. */
@@ -182,14 +202,6 @@ public class FirstScreen implements Screen, IZoneObserver {
         objectManager = new ObjectManager();
         objectManager.loadObjectsFromMap(map);
         System.out.println("ObjectManager initialisé");
-    }
-
-    //** Implémentation de IPlayerDeathListener */
-    @Override
-    public void onPlayerDeath() {
-        boolean gameEnded = true;
-        System.out.println("=== GAME OVER ===");
-        System.out.println("Le joueur est mort !");
     }
 
     /** Initialise l'interface utilisateur. */
@@ -201,9 +213,15 @@ public class FirstScreen implements Screen, IZoneObserver {
     /** Rendu principal du jeu. Appelé à chaque frame. */
     @Override
     public void render(float delta) {
+        if (!gameEnded){            //Oublie dans le code, voici solution pour arreter le jeu, mort boss marche enfin
         handleInput();
         updateGameState(delta);
-        renderScene();
+        }
+        clearScreen();
+        renderMap();
+        renderEntities();
+        renderHealthBars();
+        renderUI();
     }
 
     /** Gère les entrées clavier pour les options de débogage. */

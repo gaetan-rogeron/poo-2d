@@ -25,6 +25,9 @@ public class EnemyManager implements IZoneObserver {
     private final CollisionMap collisionMap;
     private final EnemyFactory factory;
 
+    private KingSlimeEnemy kingSlime; // Stocke le boss lui meme (s’il existe)
+    private IBossDeathListener bossDeathListener; // sert toujours a prevenir la mort du boss
+
     // Configuration des zones (doit correspondre au ZoneManager)
     private float zoneWidth;
     private float zoneHeight;
@@ -42,6 +45,15 @@ public class EnemyManager implements IZoneObserver {
         this.enemiesByZone = new HashMap<>();
         this.activatedZones = new HashSet<>();
         this.factory = new EnemyFactory();
+    }
+
+    public void setBossDeathListener(IBossDeathListener listener) {
+        this.bossDeathListener = listener;
+
+        // Si le boss existe deja, lui donner listener
+        if (kingSlime != null) {
+            kingSlime.setBossDeathListener(listener);
+        }
     }
 
     /** Configure les dimensions des zones (doit correspondre au ZoneManager). */
@@ -140,6 +152,15 @@ public class EnemyManager implements IZoneObserver {
     public void spawnEnemy(EnemyFactory.EnemyType type, float x, float y) {
         IEnemy enemy = EnemyFactory.createEnemy(type, x, y, collisionMap);
         enemies.add(enemy);
+
+        if (type == EnemyFactory.EnemyType.KING_SLIME && enemy instanceof KingSlimeEnemy) {
+            kingSlime = (KingSlimeEnemy) enemy;
+            if (bossDeathListener != null) {
+                kingSlime.setBossDeathListener(bossDeathListener);
+            }
+            System.out.println(" BOSS KING SLIME SPAWNED! Listener assigné: " + (bossDeathListener != null)); // j'avais oublié ca, on assigne le listener
+        }
+
         System.out.println(type + " spawned at: (" + x + ", " + y + ")");
     }
 

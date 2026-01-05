@@ -4,14 +4,12 @@ package gle.game2d.player;
 public class PlayerHealthComponent {
     private static final float INVINCIBILITY_DURATION = 1.0f;
     private static final int BLINK_FREQUENCY = 10;
+
     private int maxHealth;
     private int currentHealth;
     private boolean invincible;
     private float invincibilityTimer;
-
-    /** Mort du joueur : */
-    private PlayerDeathListener deathListener; // Ajout du listener
-    private final boolean deathTriggered;
+    private IPlayerDeathListener deathListener; //ca stock qui doit etre notifié
 
     /** Constructeur. */
     public PlayerHealthComponent(int maxHealth) {
@@ -19,13 +17,10 @@ public class PlayerHealthComponent {
         this.currentHealth = maxHealth;
         this.invincible = false;
         this.invincibilityTimer = 0f;
-        this.deathTriggered = false;
-        this.deathListener = null;
     }
 
-    /** Setter Listener */
-    public void setPlayerdeathListener (PlayerDeathListener listener) {
-        this.deathListener = listener;
+    public void setDeathListener(IPlayerDeathListener listener){ //le setter se fait appellé a la mort du perso
+        this.deathListener = listener; // j'avais mis deathlistener = deathlistner : FAUX, deathListner = listener : Vrai
     }
 
     /** Met à jour l'état de santé (invincibilité). */
@@ -75,12 +70,9 @@ public class PlayerHealthComponent {
 
     /** Appelé quand le joueur meurt. */
     private void onDeath() {
-        System.out.println("=======================================");
-        System.out.println("               GAME OVER               ");
-        System.out.println("          Le joueur est mort           ");
-        System.out.println("=======================================");
+        System.out.println("Player died!");
 
-        if (deathListener != null) {
+        if (deathListener != null){ //quand le personnage meurt, onDeath est appelé
             deathListener.onPlayerDeath();
         }
     }
@@ -124,13 +116,8 @@ public class PlayerHealthComponent {
         }
     }
 
-    public void setDeathListener(PlayerDeathListener deathListener) {
-    }
-
     /** Calcule le pourcentage de vie. */
     public float getHealthPercentage() {
         return (float) currentHealth / maxHealth;
     }
-
-
 }

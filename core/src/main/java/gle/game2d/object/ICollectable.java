@@ -10,19 +10,19 @@ public interface ICollectable {
      * Met à jour l'objet.
      * @param deltaTime Temps écoulé depuis la dernière frame
      */
-    void update(float deltaTime);
+    public void update(float deltaTime);
 
     /**
      * Dessine l'objet.
      * @param batch SpriteBatch pour le rendu
      */
-    void draw(SpriteBatch batch);
+    public void draw(SpriteBatch batch);
 
     /**
      * Appelé quand le joueur collecte cet objet.
      * @param player Le joueur qui collecte l'objet
      */
-    void onCollect(Player player);
+    public void onCollect(Player player);
 
     /**
      * Retourne les limites de l'objet pour la détection de collision.
@@ -39,5 +39,5 @@ public interface ICollectable {
     /**
      * Libère les ressources.
      */
-    void dispose();
+    public void dispose();
 }
