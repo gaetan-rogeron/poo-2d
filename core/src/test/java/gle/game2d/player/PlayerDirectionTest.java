@@ -6,8 +6,6 @@ import static org.junit.Assert.*;
 /**
  * Tests unitaires pour PlayerDirection.
  * Vérifie le pattern Singleton et les conversions.
- *
- * Chemin: core/src/test/java/gle/game2d/player/PlayerDirectionTest.java
  */
 public class PlayerDirectionTest {
 

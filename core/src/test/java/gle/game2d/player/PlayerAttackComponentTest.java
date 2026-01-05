@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 
 /**
  * Tests unitaires pour PlayerAttackComponent.
- * Fichier: core/src/test/java/gle/game2d/player/PlayerAttackComponentTest.java
  */
 public class PlayerAttackComponentTest {
 

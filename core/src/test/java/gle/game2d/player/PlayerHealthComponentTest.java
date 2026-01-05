@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
  * Tests unitaires pour PlayerHealthComponent.
  * Vérifie la gestion de la santé, l'invincibilité et les mécaniques de dégâts.
  */
+
 public class PlayerHealthComponentTest {
 
     private PlayerHealthComponent healthComponent;
@@ -121,4 +122,29 @@ public class PlayerHealthComponentTest {
         assertEquals("La santé actuelle devrait rester inchangée",
             INITIAL_HEALTH, healthComponent.getCurrentHealth());
     }
+
+    // Vérifie que fixer une santé maximale invalide (<= 0) déclenche une exception.
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetMaxHealthInvalid() {
+        healthComponent.setMaxHealth(0);
+    }
+
+    // Vérifie que le clignotement est actif pendant l'invincibilité (shouldBlink renvoie true à un moment donné).
+    @Test
+    public void testBlinkingDuringInvincibility() {
+        healthComponent.takeDamage(10);
+
+        // Pendant l'invincibilité, le clignotement devrait alterner
+        boolean firstCheck = healthComponent.shouldBlink();
+
+        // Avancer légèrement dans le temps
+        healthComponent.update(0.05f);
+        boolean secondCheck = healthComponent.shouldBlink();
+
+        // Les deux valeurs ne devraient pas nécessairement être identiques
+        // car le clignotement alterne
+        assertTrue("Le clignotement devrait être actif pendant l'invincibilité",
+            firstCheck || secondCheck);
+    }
 }
+
