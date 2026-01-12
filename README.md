@@ -31,47 +31,16 @@ Moteur de jeu 2D type RPG développé avec LibGDX. Le contenu (cartes, ennemis, 
 
 ### Compilation
 
-Linux/Mac:
 ```bash
 ./gradlew lwjgl3:build
 ```
 
-Windows:
-```bash
-gradlew.bat lwjgl3:build
-```
-
 ### Exécution
 
-Linux/Mac:
 ```bash
 ./gradlew lwjgl3:run
 ```
 
-Windows:
-```bash
-gradlew.bat lwjgl3:run
-```
-
-Ou via JAR:
-```bash
-java -jar lwjgl3/build/libs/lwjgl3-1.0.jar
-```
-
-### Scripts d'exécution rapide
-
-`run.sh` (Linux/Mac):
-```bash
-#!/bin/bash
-./gradlew lwjgl3:run
-```
-
-`run.bat` (Windows):
-```batch
-@echo off
-gradlew.bat lwjgl3:run
-pause
-```
 
 ## Commandes
 
@@ -134,6 +103,8 @@ Le projet inclut 65 tests unitaires.
 **Exécuter tous les tests:**
 ```bash
 ./gradlew test
+
+./gradlew test --tests gle.game2d.AllTestsSuite
 ```
 
 **Par catégorie:**
@@ -143,8 +114,6 @@ Le projet inclut 65 tests unitaires.
 ./gradlew test --tests gle.game2d.behavior.*
 ./gradlew test --tests gle.game2d.zone.*
 ```
-
-Rapport HTML: `core/build/reports/tests/test/index.html`
 
 ## Design Patterns
 
