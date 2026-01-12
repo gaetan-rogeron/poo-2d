@@ -5,51 +5,71 @@ import gle.game2d.behavior.ChasePlayerBehavior;
 import gle.game2d.behavior.AttackOnProximityBehavior;
 import gle.game2d.collision.CollisionMap;
 
-/** Factory pour créer des ennemis. Applique le patron Factory Method. */
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Factory pour créer des ennemis. Applique le patron Factory Method avec Registry Pattern.
+ * Utilise une approche orientée objet extensible sans enum ni switch.
+ */
 class EnemyFactory {
 
-    /** Énumération des types d'ennemis disponibles. */
-    public enum EnemyType {
-        SLIME,
-        SKELETON,
-        KING_SLIME
+    /** Interface fonctionnelle pour créer un ennemi. Permet l'extensibilité. */
+    @FunctionalInterface
+    private interface EnemyCreator {
+        IEnemy create(float x, float y, CollisionMap collisionMap);
     }
 
-    /** Crée un ennemi selon son type. Factory Method Pattern. */
-    public static IEnemy createEnemy(EnemyType type, float x, float y,
-                                     CollisionMap collisionMap) {
-        if (type == null) {
-            throw new IllegalArgumentException("Type d'ennemi ne peut pas être null");
-        }
+    /** Registre des créateurs d'ennemis. Map nom -> fonction de création. */
+    private static final Map<String, EnemyCreator> ENEMY_CREATORS = new HashMap<>();
 
-        switch (type) {
-            case SLIME:
-                return createSlime(x, y, collisionMap);
-            case SKELETON:
-                return createSkeleton(x, y, collisionMap);
-            case KING_SLIME:
-                return createKingSlime(x, y, collisionMap);
-            default:
-                throw new IllegalArgumentException("Type d'ennemi inconnu: " + type);
-        }
+    // Initialisation statique du registre avec les types d'ennemis disponibles
+    static {
+        registerEnemyType("Slime", EnemyFactory::createSlime);
+        registerEnemyType("Skeleton", EnemyFactory::createSkeleton);
+        registerEnemyType("KingSlime", EnemyFactory::createKingSlime);
     }
 
-    /** Crée un ennemi selon son type (version String pour compatibilité). Factory Method Pattern. */
+    /**
+     * Enregistre un nouveau type d'ennemi dans le registre.
+     * Permet l'ajout de nouveaux types sans modifier le code existant (Open/Closed Principle).
+     *
+     * @param typeName Nom du type d'ennemi
+     * @param creator Fonction de création de l'ennemi
+     */
+    public static void registerEnemyType(String typeName, EnemyCreator creator) {
+        if (typeName == null || typeName.isEmpty()) {
+            throw new IllegalArgumentException("Le nom du type ne peut pas être vide");
+        }
+        if (creator == null) {
+            throw new IllegalArgumentException("Le créateur ne peut pas être null");
+        }
+        ENEMY_CREATORS.put(typeName, creator);
+    }
+
+    /**
+     * Crée un ennemi selon son type. Factory Method Pattern avec Registry.
+     *
+     * @param enemyType Nom du type d'ennemi
+     * @param x Position X
+     * @param y Position Y
+     * @param collisionMap Carte de collision
+     * @return Une instance d'ennemi
+     * @throws IllegalArgumentException Si le type est inconnu ou invalide
+     */
     public static IEnemy createEnemy(String enemyType, float x, float y,
                                      CollisionMap collisionMap) {
         if (enemyType == null || enemyType.isEmpty()) {
             throw new IllegalArgumentException("Type d'ennemi ne peut pas être vide");
         }
 
-        if (enemyType.equals("Slime")) {
-            return createSlime(x, y, collisionMap);
-        } else if (enemyType.equals("Skeleton")) {
-            return createSkeleton(x, y, collisionMap);
-        } else if (enemyType.equals("KingSlime")) {
-            return createKingSlime(x, y, collisionMap);
+        EnemyCreator creator = ENEMY_CREATORS.get(enemyType);
+        if (creator == null) {
+            throw new IllegalArgumentException("Type d'ennemi inconnu: " + enemyType
+                + ". Types disponibles: " + ENEMY_CREATORS.keySet());
         }
 
-        throw new IllegalArgumentException("Type d'ennemi inconnu: " + enemyType);
+        return creator.create(x, y, collisionMap);
     }
 
     /** Crée un Slime. */

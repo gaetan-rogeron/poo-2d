@@ -120,7 +120,7 @@ public class EnemyManager implements IZoneObserver {
             float x = obj.getProperties().get("x", Float.class);
             float y = obj.getProperties().get("y", Float.class);
 
-            EnemyFactory.EnemyType type = parseEnemyType(name);
+            String type = parseEnemyType(name);
             if (type != null) {
                 return new EnemySpawnData(type, x, y);
             }
@@ -130,35 +130,50 @@ public class EnemyManager implements IZoneObserver {
         return null;
     }
 
-    /** Convertit un nom d'objet en type d'ennemi. */
-    private EnemyFactory.EnemyType parseEnemyType(String name) {
-        try {
-            // Conversion directe
-            return EnemyFactory.EnemyType.valueOf(name.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            // Essayer avec conversion de CamelCase vers SNAKE_CASE
-            // Ex: "KingSlime" -> "KING_SLIME"
-            String snakeCase = name.replaceAll("([a-z])([A-Z])", "$1_$2").toUpperCase();
-            try {
-                return EnemyFactory.EnemyType.valueOf(snakeCase);
-            } catch (IllegalArgumentException e2) {
-                // Pas un type d'ennemi valide
-                return null;
-            }
+    /**
+     * Convertit un nom d'objet en type d'ennemi valide.
+     * Normalise les noms pour correspondre au registre de la factory.
+     * Retourne null pour les objets qui ne sont pas des ennemis.
+     */
+    private String parseEnemyType(String name) {
+        if (name == null || name.isEmpty()) {
+            return null;
         }
+
+        // Filtrer les objets qui ne sont PAS des ennemis
+        Set<String> nonEnemyTypes = Set.of("Player", "Potion", "Sword");
+        if (nonEnemyTypes.contains(name)) {
+            return null; // Ignorer ces objets
+        }
+
+        // Normaliser le nom pour correspondre au format du registre
+        String normalized = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+
+        // Cas spéciaux pour les noms composés
+        if (name.equalsIgnoreCase("kingslime") || name.equalsIgnoreCase("king_slime")) {
+            normalized = "KingSlime";
+        }
+
+        return normalized;
     }
 
-    /** Crée et ajoute un ennemi à la position donnée. */
-    public void spawnEnemy(EnemyFactory.EnemyType type, float x, float y) {
+    /**
+     * Crée et ajoute un ennemi à la position donnée.
+     * @param type Nom du type d'ennemi (ex: "Slime", "Skeleton", "KingSlime")
+     * @param x Position X
+     * @param y Position Y
+     */
+    public void spawnEnemy(String type, float x, float y) {
         IEnemy enemy = EnemyFactory.createEnemy(type, x, y, collisionMap);
         enemies.add(enemy);
 
-        if (type == EnemyFactory.EnemyType.KING_SLIME && enemy instanceof KingSlimeEnemy) {
+        // Gestion spéciale pour le boss KingSlime
+        if ("KingSlime".equals(type) && enemy instanceof KingSlimeEnemy) {
             kingSlime = (KingSlimeEnemy) enemy;
             if (bossDeathListener != null) {
                 kingSlime.setBossDeathListener(bossDeathListener);
             }
-            System.out.println(" BOSS KING SLIME SPAWNED! Listener assigné: " + (bossDeathListener != null)); // j'avais oublié ca, on assigne le listener
+            System.out.println(" BOSS KING SLIME SPAWNED! Listener assigné: " + (bossDeathListener != null));
         }
 
         System.out.println(type + " spawned at: (" + x + ", " + y + ")");
