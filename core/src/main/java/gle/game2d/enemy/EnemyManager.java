@@ -200,6 +200,10 @@ public class EnemyManager implements IZoneObserver {
     // Implémentation de IZoneObserver
 
     @Override
+    public void onPlayerDeath() {
+    }
+
+    @Override
     public void onTransitionStart(int fromZoneX, int fromZoneY, int toZoneX, int toZoneY) {
         // Pas besoin de faire quelque chose au début de la transition
     }

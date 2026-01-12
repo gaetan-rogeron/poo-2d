@@ -4,6 +4,9 @@ package gle.game2d.zone;
  * Interface Observer pour les changements de zones. Permet aux objets intéressés d'être notifiés des transitions de zones. Applique le patron Observer.
  */
 public interface IZoneObserver {
+    //** Implémentation de IPlayerDeathListener */
+    void onPlayerDeath();
+
     /** Appelé lorsqu'une transition de zone commence. */
     void onTransitionStart(int fromZoneX, int fromZoneY, int toZoneX, int toZoneY);
 
